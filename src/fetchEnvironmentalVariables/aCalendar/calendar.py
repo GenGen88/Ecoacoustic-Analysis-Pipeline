@@ -20,4 +20,4 @@ def getAudioDate(fileName: str) -> datetime:
     month = date[4:6]
     day = date[6:8]
 
-    return datetime.datetime(year, month, day)
+    return f" {day}/{month}/{year}"

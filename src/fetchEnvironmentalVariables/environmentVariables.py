@@ -1,8 +1,8 @@
-from calendar.calendar import getAudioDate
+from fetchEnvironmentalVariables.aCalendar.calendar import getAudioDate
 
 def createEnvironmentVariablesCSV(filePath) -> None:
     print(f"Analyzing {filePath}")
 
-    dateTime = getAudioDate(filePath)
+    audioDate = getAudioDate(filePath)
 
-    print(dateTime)
+    print(audioDate)
