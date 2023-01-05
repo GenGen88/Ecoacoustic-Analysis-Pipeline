@@ -1,5 +1,6 @@
 import datetime
 
+
 def getSeason(date : datetime) -> str:
     if date.month == 12 or 1 or 2: # December, January, February
         return "summer"
@@ -9,3 +10,14 @@ def getSeason(date : datetime) -> str:
         return "winter"
     if date.month == 9 or 10 or 11: # September, October, November
         return "spring"
+
+def getAudioDate(fileName: str) -> datetime:
+    DATE_INDEX: int = 5
+    
+    date = fileName.split("_")[DATE_INDEX]
+
+    year = date[0:4]
+    month = date[4:6]
+    day = date[6:8]
+
+    return datetime.datetime(year, month, day)
