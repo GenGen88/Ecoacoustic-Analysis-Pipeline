@@ -1,6 +1,10 @@
 #!/bin/bash
 
+cd ./src/;
+
 git clone https://github.com/kahst/BirdNET-Analyzer.git;
+
+cd ..;
 
 # for openSUSE
 sudo zypper install -y docker;

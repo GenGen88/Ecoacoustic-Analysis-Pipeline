@@ -6,6 +6,12 @@
 - Analyse the expected **biodiversity** of an ecosystem **given environmental variables**
   - Run a model of the effects of climate change on biodiversity and possible futures
 
+## Features
+- chart bird species over time
+- relate to seasonal data
+- acoustic indices
+- vegetation?
+
 ## using pip3 packages
 
 - [weather-au](https://pypi.org/project/weather-au/)
