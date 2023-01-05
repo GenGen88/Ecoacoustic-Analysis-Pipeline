@@ -1,14 +1,13 @@
-# idea for making one big CSV for R
-# readBirdnetFile("data")[5] + weatherData()[5]
+from util.util import flattenArrayToString
 
 def readBirdnetFile(filename: str):
     birdNetRows = [] # create array to hold rows
     
     with open(filename, "r") as fp:
-        fileContents = fp.readlines()
-        fileLines = len(fileContents.split("\n"))
+        fileLines = fp.readlines()
+        fileLinesCount = len(fileLines)
 
-        for i in range(fileLines): # puts every row into an array
+        for i in range(fileLinesCount): # puts every row into an array
             birdNetRows.append(
                 generateBirdnetRow(fileLines[i])
             )
@@ -16,4 +15,4 @@ def readBirdnetFile(filename: str):
     return birdNetRows
 
 def generateBirdnetRow(content: str) -> str:
-    content.replace("\t", ",")
+    return content.replace("\t", ",")

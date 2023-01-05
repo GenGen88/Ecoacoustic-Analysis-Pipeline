@@ -1,21 +1,25 @@
 from fetchEnvironmentalVariables.environmentVariables import createEnvironmentVariablesCSV
 from util.util import throwError, initConsole, pathExists
-from util.constants import INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404
+from initDirectory import validateDirectoryStructure
+
+from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION
 
 import sys
 
-# should take the recording file name as the first argument
 if __name__ == "__main__":
-
+    # ensure that the CLI is standardized
     initConsole()
 
-    if len(sys.argv) < 2:
-        throwError(INVALID_ARGUMENTS_ERROR_MESSAGE)
+    # ensure that the working directory is standardized
+    validateDirectoryStructure()
 
-    audioInFilePath = sys.argv[1]
+    if len(sys.argv) < CLA_FILE_IN_POSITION + 1:
+        throwError(ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE)
+
+    audioInFilePath = sys.argv[CLA_FILE_IN_POSITION]
 
     # check that the audio file or directory exists
     if not pathExists(audioInFilePath):
-        throwError(ERROR_404)
+        throwError(ERROR_404_MESSAGE)
 
     createEnvironmentVariablesCSV(sys.argv[1])

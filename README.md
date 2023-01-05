@@ -16,3 +16,13 @@
 
 - [weather-au](https://pypi.org/project/weather-au/)
 - [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
+
+## How to Use
+
+### Fetch Data Columns
+
+`python3 ./src/main.py [file_path] [path]`
+
+### Run Analysis Programs
+
+TODO: (but it should look something like `R ./AP/xyz.r <csv_in>`)

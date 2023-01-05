@@ -1,6 +1,10 @@
-def throwError(message: str, errorCode: int = 1) -> None:
+def throwError(
+    message: str,
+    fatal: bool = True,
+    errorCode: int = 1
+) -> None:
     print(f"Runtime Error: {message}...")
-    exit(errorCode)
+    _=exit(errorCode) if fatal else 0
 
 def initConsole():
     print("\n" * 2)
@@ -17,3 +21,22 @@ def readFile(fileName: str) -> str:
 def pathExists(path: str):
     import os
     return os.path.exists(path)
+
+def createFolder(path: str) -> bool:
+    import os
+
+    try:
+        os.mkdir(path)
+        return True
+    except any as error:
+        throwError(error, fatal = False)
+        return False
+
+def flattenArrayToString(array) -> str:
+    string = ""
+    flattenedFileContents = [item for sublist in array for item in sublist]
+    
+    for c in flattenedFileContents:
+        string += c
+    
+    return string

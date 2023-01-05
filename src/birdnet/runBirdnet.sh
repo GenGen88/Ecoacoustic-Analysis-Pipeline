@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 ../BirdNET-Analyzer/analyze.py --i $1 --o /path/to/output/folder;
+python3 ./src/BirdNET-Analyzer/analyze.py --i $1 --o $2;

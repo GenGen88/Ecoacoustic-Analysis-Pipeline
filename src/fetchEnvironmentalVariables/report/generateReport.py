@@ -1,4 +1,5 @@
 from util.util import writeToFile
+from util.constants import DIR_REPORT_OUT_FILE_PATH
 
 def generateReport(
     birdNetRows = [],
@@ -6,4 +7,4 @@ def generateReport(
     seasonsRows = []
 ) -> None:
     for rowIndex in range(len(birdNetRows)):
-        writeToFile(f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}")
+        writeToFile(DIR_REPORT_OUT_FILE_PATH, f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}")
