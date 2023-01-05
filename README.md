@@ -11,7 +11,6 @@
 - acoustic indices
 - vegetation?
 
-
 ## using pip3 packages
 
 - [weather-au](https://pypi.org/project/weather-au/)

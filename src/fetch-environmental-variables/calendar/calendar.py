@@ -9,4 +9,3 @@ def getSeason(date : datetime) -> str:
         return "winter"
     if date.month == 9 or 10 or 11: # September, October, November
         return "spring"
-    
