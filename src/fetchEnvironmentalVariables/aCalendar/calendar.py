@@ -1,5 +1,12 @@
 import datetime
 
+def generateSeasonsList(audioDates: list(datetime)) -> list(str):
+    returnValue = []
+    
+    for date in audioDates:
+        returnValue.append(getSeason(date))
+    
+    return returnValue
 
 def getSeason(date : datetime) -> str:
     if date.month == 12 or 1 or 2: # December, January, February

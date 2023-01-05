@@ -1,6 +1,9 @@
 from util.util import writeToFile
 
-def generateReport(weatherData: str, humanDensity: str, analysisJob: str = "system") -> None:
-    reportContents = f"{weatherData}, {humanDensity}"
-    
-    writeToFile(analysisJob, reportContents)
+def generateReport(
+    birdNetRows = None,
+    dateRows = None,
+    seasonsRows = None
+) -> None:
+    for rowIndex in range(len(birdNetRows)):
+        writeToFile(f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}")

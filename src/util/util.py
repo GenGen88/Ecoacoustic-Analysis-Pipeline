@@ -6,7 +6,7 @@ def initConsole():
     print("\n" * 2)
 
 def writeToFile(filename: str, contents: str) -> None:
-    with open(filename, "w") as fp:
+    with open(filename, "a") as fp:
         fp.write(contents)
         fp.close()
 
