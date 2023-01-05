@@ -19,6 +19,10 @@
 
 ## How to Use
 
+### Install
+
+Run the install script `./setup.sh`
+
 ### Fetch Data Columns
 
 `python3 ./src/main.py [file_path] [path]`

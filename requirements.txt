@@ -1,2 +1,3 @@
-weather-au
-beautifulsoup4
+tensorflow
+librosa
+numpy

@@ -1,6 +1,6 @@
-from fetchEnvironmentalVariables.environmentVariables import createEnvironmentVariablesCSV
+from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
 from util.util import throwError, initConsole, pathExists
-from initDirectory import validateDirectoryStructure
+from util.initDirectory import validateDirectoryStructure
 
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION
 

@@ -1,7 +1,7 @@
-from birdnet.birdNet import runBirdNet
-from fetchEnvironmentalVariables.calendarComponent.calendar import generateSeasonsList, getAudioDate
-from fetchEnvironmentalVariables.report.generateReport import generateReport
-from fetchEnvironmentalVariables.report.speciesAdujusted import readBirdnetFile
+from birdnet.birdNetAnalyses import runBirdNet
+from util.calendar import generateSeasonsList, getAudioDate
+from environmentVariables.report.generateReport import generateReport
+from birdnet.birdNetResults import readBirdnetResults
 
 from util.constants import DIR_BIRDNET_OUT_FILE_PATH
 
@@ -10,7 +10,7 @@ def createEnvironmentVariablesCSV(filePath) -> None:
 
     runBirdNet(filePath)
 
-    birdNetData = readBirdnetFile(DIR_BIRDNET_OUT_FILE_PATH)
+    birdNetData = readBirdnetResults(DIR_BIRDNET_OUT_FILE_PATH)
     birdNetDataLength = len(birdNetData)
 
     audioDateData = getAudioDate(filePath, birdNetDataLength)

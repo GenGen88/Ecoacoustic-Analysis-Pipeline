@@ -31,12 +31,3 @@ def createFolder(path: str) -> bool:
     except any as error:
         throwError(error, fatal = False)
         return False
-
-def flattenArrayToString(array) -> str:
-    string = ""
-    flattenedFileContents = [item for sublist in array for item in sublist]
-    
-    for c in flattenedFileContents:
-        string += c
-    
-    return string

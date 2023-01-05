@@ -1,6 +1,4 @@
-from util.util import flattenArrayToString
-
-def readBirdnetFile(filename: str):
+def readBirdnetResults(filename: str):
     birdNetRows = [] # create array to hold rows
     
     with open(filename, "r") as fp:
