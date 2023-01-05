@@ -70,7 +70,7 @@ main() {
   init_environment;
 
   activate_python;
-  python3 ./src/fetch-environmental-variables/main.py $1;
+  python3 ./src/main.py $1;
   deactivate_python;
 }
 
