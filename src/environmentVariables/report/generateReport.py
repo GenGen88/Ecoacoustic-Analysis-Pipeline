@@ -1,10 +1,18 @@
-from util.util import writeToFile
-from util.constants import DIR_REPORT_OUT_FILE_PATH
+from util.util import writeToFile, pathExists
+from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS
 
 def generateReport(
     birdNetRows = [],
     dateRows = [],
     seasonsRows = []
 ) -> None:
-    for rowIndex in range(len(birdNetRows)):
-        writeToFile(DIR_REPORT_OUT_FILE_PATH, f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}")
+    if not pathExists(DIR_REPORT_OUT_FILE_PATH):
+        generateReportHeaders()
+
+    for rowIndex in range(2, len(birdNetRows)):
+        rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}"
+        print(rowContent)
+        writeToFile(DIR_REPORT_OUT_FILE_PATH, rowContent)
+
+def generateReportHeaders() -> None:
+    writeToFile(DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS)

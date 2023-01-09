@@ -1,5 +1,5 @@
 from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
-from util.util import throwError, initConsole, pathExists
+from util.util import throwError, initConsole, pathExists, directoryFiles, isAudioFile
 from util.initDirectory import validateDirectoryStructure
 
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION
@@ -22,4 +22,11 @@ if __name__ == "__main__":
     if not pathExists(audioInFilePath):
         throwError(ERROR_404_MESSAGE)
 
-    createEnvironmentVariablesCSV(sys.argv[1])
+    allFiles = directoryFiles(audioInFilePath)
+
+    print(f"Files to analyze: {allFiles}")
+
+    for file in allFiles:
+        createEnvironmentVariablesCSV(file)
+
+    print("\nDone!")

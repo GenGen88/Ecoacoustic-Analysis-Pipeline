@@ -2,10 +2,10 @@ import datetime
 
 def generateSeasonsList(audioDates):
     returnValue = []
-    
+
     for date in audioDates:
         returnValue.append(getSeason(date))
-    
+
     return returnValue
 
 def getSeason(date : datetime) -> str:
@@ -19,9 +19,9 @@ def getSeason(date : datetime) -> str:
         return "spring"
 
 def getAudioDate(fileName: str, numberOfRows: int):
-    DATE_INDEX: int = 5
-    
-    date = fileName.split("_")[DATE_INDEX]
+    DATE_INDEX: int = 0
+
+    date = fileName.split("T")[DATE_INDEX].split("/").pop()
 
     year = int(date[0:4])
     month = int(date[4:6])

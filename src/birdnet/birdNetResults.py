@@ -1,6 +1,6 @@
 def readBirdnetResults(filename: str):
     birdNetRows = [] # create array to hold rows
-    
+
     with open(filename, "r") as fp:
         fileLines = fp.readlines()
         fileLinesCount = len(fileLines)

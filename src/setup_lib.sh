@@ -5,5 +5,6 @@ if [ ! -d "./lib/" ]; then
 fi
 
 if [ ! -d "./lib/BirdNET-Analyzer" ]; then
+    cd ./lib/;
     git clone https://github.com/kahst/BirdNET-Analyzer.git;
 fi

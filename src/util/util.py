@@ -1,3 +1,7 @@
+import os
+
+from util.constants import CONSOLE_INIT_MESSAGE, VALID_AUDIO_FILE_EXTENSIONS
+
 def throwError(
     message: str,
     fatal: bool = True,
@@ -7,27 +11,60 @@ def throwError(
     _=exit(errorCode) if fatal else 0
 
 def initConsole():
+    print()
+    print(CONSOLE_INIT_MESSAGE)
     print("\n" * 2)
 
-def writeToFile(filename: str, contents: str) -> None:
-    with open(filename, "a") as fp:
+def writeToFile(path: str, contents: str) -> None:
+    with open(path, "a") as fp:
         fp.write(contents)
         fp.close()
 
-def readFile(fileName: str) -> str:
-    with open(fileName, "r") as fp:
+def readFile(path: str) -> str:
+    with open(path, "r") as fp:
         return fp.readlines()
 
-def pathExists(path: str):
-    import os
+def deleteFile(path: str) -> bool:
+    try:
+        os.remove(path)
+        return True
+    except any as error:
+        throwError(error, fatal = False)
+        return False
+
+def pathExists(path: str) -> bool:
     return os.path.exists(path)
 
-def createFolder(path: str) -> bool:
-    import os
+"""
+Returns if the path is a folder or file in the form of a return code
+    1: The path is a folder
+    0: The path is a file
+    -1: The path could not be found
+"""
+def isFolder(path: str) -> int:
+    if not pathExists(path): return -1
+    return (0 if os.path.isfile(path) else 1)
 
+def createFolder(path: str) -> bool:
     try:
         os.mkdir(path)
         return True
     except any as error:
         throwError(error, fatal = False)
         return False
+
+def directoryFiles(path: str) -> list[str]:
+    if not isFolder(path):
+        return [path]
+
+    allFiles = os.listdir(path)
+    adjustedFiles = []
+
+    for file in allFiles:
+        if isAudioFile(file):
+            adjustedFiles.append(path + file)
+
+    return adjustedFiles
+
+def isAudioFile(fileName: str) -> bool:
+    return any(ele in fileName for ele in VALID_AUDIO_FILE_EXTENSIONS)
