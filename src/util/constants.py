@@ -14,7 +14,7 @@ CLA_FILE_IN_POSITION = 1
 VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 
 # misc
-COLUMN_HEADERS = ",date,season,Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence\n"
+COLUMN_HEADERS = "date,season,Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence\n"
 
 CONSOLE_INIT_MESSAGE = """
 VRES Analyser

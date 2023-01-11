@@ -1,4 +1,4 @@
-from util.util import writeToFile, pathExists
+from util.util import writeToFile, pathExists, sanitizeString
 from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS
 
 def generateReport(
@@ -11,7 +11,11 @@ def generateReport(
 
     for rowIndex in range(2, len(birdNetRows)):
         rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]}"
-        print(rowContent)
+        rowContent = sanitizeString(rowContent)
+
+        # # Uncomment for verbose logging
+        #TODO: I need to add a --verbose flag to enable this
+        # print(rowContent)
         writeToFile(DIR_REPORT_OUT_FILE_PATH, rowContent)
 
 def generateReportHeaders() -> None:

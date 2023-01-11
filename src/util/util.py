@@ -68,3 +68,7 @@ def directoryFiles(path: str) -> list[str]:
 
 def isAudioFile(fileName: str) -> bool:
     return any(ele in fileName for ele in VALID_AUDIO_FILE_EXTENSIONS)
+
+def sanitizeString(string: str) -> str:
+    newlineCharacter = "\n"
+    return f"{string.replace(newlineCharacter, '')}{newlineCharacter}"
