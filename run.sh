@@ -23,14 +23,14 @@ initilize_python_virtual_environment() {
         python -m venv ./venv/;
     fi
 
-    if [ -d ./venv/bin/ ]; do
+    if [ -d ./venv/bin/ ]; then
         # user is on linux
         # this may also work for macOS, but I haven't tested yet
         source ./venv/bin/activate;
     else
         # user is on windows
         source ./venv/Scripts/activate;
-    then
+    fi
 
     # upgrade pip
     if [ $USE_PYTHON3 -eq 1 ]; then
@@ -57,7 +57,7 @@ activate_python() {
     if [ ! -d ./venv/ ]; then
         initilize_python_virtual_environment;
     else
-        if [ -d ./venv/bin/ ]; then;
+        if [ -d ./venv/bin/ ]; then
             source ./venv/bin/activate;
         else
             source ./venv/Scripts/activate;
