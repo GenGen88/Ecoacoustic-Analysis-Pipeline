@@ -72,3 +72,11 @@ def isAudioFile(fileName: str) -> bool:
 def sanitizeString(string: str) -> str:
     newlineCharacter = "\n"
     return f"{string.replace(newlineCharacter, '')}{newlineCharacter}"
+
+def openFile(path: str) -> bool:
+    try:
+        os.startfile(path)
+        return True
+    except any as error:
+        throwError(error, fatal = False)
+        return False

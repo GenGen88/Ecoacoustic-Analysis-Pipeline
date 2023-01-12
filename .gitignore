@@ -161,5 +161,6 @@ cython_debug/
 
 # custom rulesets
 out/
+in/
 
 .Rhistory

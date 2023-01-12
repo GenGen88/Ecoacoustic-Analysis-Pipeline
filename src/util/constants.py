@@ -6,7 +6,7 @@ ERROR_INVALID_DATE_ERROR_MESSAGE = "invalid date found..."
 # working directory constants
 DIR_OUT_DIRECTORY = "./out/"
 DIR_BIRDNET_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}birdnet-results.csv"
-DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}/report.csv"
+DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1
@@ -14,7 +14,7 @@ CLA_FILE_IN_POSITION = 1
 VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 
 # misc
-COLUMN_HEADERS = "date,season,Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence\n"
+COLUMN_HEADERS = "Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence,date,season\n"
 
 CONSOLE_INIT_MESSAGE = """
 VRES Analyser
