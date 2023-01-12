@@ -53,7 +53,7 @@ def createFolder(path: str) -> bool:
         throwError(error, fatal = False)
         return False
 
-def directoryFiles(path: str) -> list[str]:
+def directoryFiles(path: str):
     if not isFolder(path):
         return [path]
 
