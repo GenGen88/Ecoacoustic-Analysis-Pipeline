@@ -1,21 +1,16 @@
-# Machine Learning Predictions of Bird Bio Diversity on the basis of Environmental Variables
+# Realtime analysis of bird species, and the interaction with environment variables
 
 ## Objectives
 
-- Analyse the expected **environmental variables** of an ecosystem **given biodiversity**
-- Analyse the expected **biodiversity** of an ecosystem **given environmental variables**
-  - Run a model of the effects of climate change on biodiversity and possible futures
+- Analyze abundance of bird species over seasonal dates
+- Display realtime analyses on a website
 
 ## Features
+
 - chart bird species over time
 - relate to seasonal data
 - acoustic indices
 - vegetation?
-
-## using pip3 packages
-
-- [weather-au](https://pypi.org/project/weather-au/)
-- [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
 
 ## How to Use
 
@@ -27,6 +22,6 @@ Run the install script `./setup.sh`
 
 `./run.sh [file_path] [path]`
 
-### Run Analysis Programs
+### Visualize Data
 
-TODO: (but it should look something like `R ./AP/xyz.r <csv_in>`)
+Visualizing uses an Angular website that handles rendering the data, and fetching new data when it becomes available.
