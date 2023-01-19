@@ -1,5 +1,6 @@
-      <button
+    <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
+      onclick="window.location.href = '/analysis_jobs/download'"
     >
       Download Raw Results
     </button>
@@ -43,4 +44,37 @@
     background-color: #111;
   }
 </style>
+
+<script>
+  const generateAnalysisJob = () => {
+    const analysisInputFilePath = getAnalysisJobFilePath();
+
+    if (analysisInputFilePath === null) {
+      return throwError("Please specify an input audio recording / directory to analyse in the input box");
+    }
+
+    window.location.href = `/analysis_jobs/new?filePath=${analysisInputFilePath}`;
+  }
+
+  const getAnalysisJobFilePath = () => {
+    const inputBox = document.getElementById("filename-input");
+
+    if (inputBox !== undefined && inputBox !== null) {
+      const userSpecifiedFileName = inputBox.value;
+
+      if (userSpecifiedFileName !== "") {
+        return userSpecifiedFileName;
+      } else {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  const throwError = (message) => {
+    alert(`User Error: ${message}`);
+    return null;
+  }
+</script>
 </html>

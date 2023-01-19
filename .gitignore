@@ -161,6 +161,9 @@ cython_debug/
 
 # custom rulesets
 out/
+
+# please use the in/ directory for your audio files
+# this is because I'm unsure what copyright / copyleft licenses the audio recordings are licensed under
 in/
 
 .Rhistory
