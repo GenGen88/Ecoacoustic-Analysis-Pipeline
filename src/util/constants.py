@@ -5,12 +5,17 @@ ERROR_INVALID_DATE_ERROR_MESSAGE = "invalid date found..."
 
 # working directory constants
 DIR_OUT_DIRECTORY = "./out/"
+DIR_IN_DIRECTORY = "./data/"
+
+DIR_WEATHER_IN_FILE_PATH = f"{DIR_IN_DIRECTORY}"
+
 DIR_BIRDNET_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}birdnet-results.csv"
+DIR_WEATHER_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}weather.csv"
 DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1
-PIPELINE_MODE_CLA_POSITION = 2
+CLA_PIPELINE_MODE_CLA_POSITION = 2
 
 VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 

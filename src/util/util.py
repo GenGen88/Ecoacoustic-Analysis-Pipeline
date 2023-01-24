@@ -85,3 +85,6 @@ def openFile(path: str) -> bool:
     except any as error:
         throwError(error, fatal = False)
         return False
+
+def fileExists(path: str) -> bool:
+    return os.path.isFile(path)

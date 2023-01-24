@@ -2,7 +2,7 @@ from environmentVariables.environmentVariables import createEnvironmentVariables
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile
 from util.initDirectory import validateDirectoryStructure
 
-from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, PIPELINE_MODE_CLA_POSITION
+from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION
 
 import sys
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # in pipeline mode, when an audio file is processed, it is deleted. It will then continue looking for audio files
     # until the user terminates the program with Ctrl + C
     pipelineMode = False
-    if len(sys.argv) >= PIPELINE_MODE_CLA_POSITION:
+    if len(sys.argv) >= CLA_PIPELINE_MODE_CLA_POSITION:
         print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
         pipelineMode = True
 
