@@ -22,8 +22,9 @@ if __name__ == "__main__":
     # until the user terminates the program with Ctrl + C
     pipelineMode = False
     if len(sys.argv) >= CLA_PIPELINE_MODE_CLA_POSITION:
-        print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
-        pipelineMode = True
+        if sys.argv[CLA_PIPELINE_MODE_CLA_POSITION] == "--pipeline":
+            print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
+            pipelineMode = True
 
     while (pipelineMode):
         # check that the audio file or directory exists
