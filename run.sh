@@ -89,8 +89,8 @@ main() {
   init_environment;
 
   activate_python;
-  python3 ./src/main.py $1;
+  python3 ./src/main.py $1 $2;
   deactivate_python;
 }
 
-main $1;
+main $1 $2;
