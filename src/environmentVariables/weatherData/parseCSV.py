@@ -1,10 +1,15 @@
-from src.util.util import deleteFile, isFolder, throwError, fileExists, directoryFiles, readFile
-from src.environmentVariables.weatherData.constants import WEATHER_DATA_START_INDEX
+from util.util import deleteFile, isFolder, throwError, fileExists, directoryFiles, readFile
+from environmentVariables.weatherData.constants import WEATHER_DATA_START_INDEX, WEATHER_FETCHER_SCRIPT_PATH
+from util.constants import DIR_WEATHER_IN_FILE_PATH
+
+import os
 
 # combine all csv files into one big csv file in ./out/
 def aggregateCSVFiles(inPath: str, outPath: str = "./out/weatherData.csv") -> str:
     if not isFolder(inPath):
-        throwError(f"{inPath} is not a recognised path", errorCode=404)
+        throwError(f"No input data for weather data declared.\nPlease place weather data in {DIR_WEATHER_IN_FILE_PATH}", fatal=False, errorCode=404)
+        # # TODO: Genna is working on the fetcher for data
+        os.system(WEATHER_FETCHER_SCRIPT_PATH)
 
     # remove results from previous runs
     if fileExists(outPath):
@@ -21,9 +26,12 @@ def aggregateCSVFiles(inPath: str, outPath: str = "./out/weatherData.csv") -> st
 
         # since the weather csv files contain some comments at the top, we need to remove them before continuing
         csvRows = readFile(file)
-        count = WEATHER_DATA_START_INDEX
-        for line in csvRows:
+        count = 0
+        for line in csvRows.split("\n"):
+            if count < WEATHER_DATA_START_INDEX:
+                continue
             count += 1
-            print("Line{}: {}".format(count, line.strip()))
-    
+
+            totalFile += line
+
     return totalFile

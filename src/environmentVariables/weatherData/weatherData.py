@@ -1,5 +1,5 @@
-from src.environmentVariables.weatherData.parseCSV import aggregateCSVFiles
-from src.util.constants import DIR_WEATHER_IN_FILE_PATH, DIR_WEATHER_OUT_FILE_PATH
+from environmentVariables.weatherData.parseCSV import aggregateCSVFiles
+from util.constants import DIR_WEATHER_IN_FILE_PATH, DIR_WEATHER_OUT_FILE_PATH
 from util.util import fileExists, readFile
 
 from pandas import *
@@ -15,10 +15,24 @@ def getAllWeatherData() -> str:
     return readFile(DIR_WEATHER_OUT_FILE_PATH)
 
 # gets weather data for a specific day
-def getDayWeatherData() -> str:
-    allWeatherData = getAllWeatherData()
+def getDayWeather(dateToFind: str) -> str:
+    # instantiate the weather data csv
+    getAllWeatherData()
     data = read_csv(DIR_WEATHER_IN_FILE_PATH)
 
-    dates = data["Date"]
+    weatherForDay = data.loc(data["date"] == dateToFind)
+    
+    if (not weatherForDay == None and not weatherForDay == [] and not weatherForDay == ""):
+        return weatherForDay
+    else:
+        return ""
 
-    i = 0
+def getWeatherDataResult(audioDateData):
+    weatherDataResults = []
+
+    for date in audioDateData:
+        weatherDataResults.append(
+            getDayWeather(date)
+        )
+    
+    return weatherDataResults
