@@ -1,5 +1,5 @@
 from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
-from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole
+from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile
 from util.initDirectory import validateDirectoryStructure
 
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, PIPELINE_MODE_CLA_POSITION
@@ -36,5 +36,6 @@ if __name__ == "__main__":
 
         for file in allFiles:
             createEnvironmentVariablesCSV(file)
+            deleteFile(file)
 
     closeConsole()
