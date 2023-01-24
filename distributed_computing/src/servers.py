@@ -1,5 +1,3 @@
-from cmath import exp
-from socket import timeout
 from util.constants import CONFIG_FILE_PATH, REPLICA_SERVERS_JSON_KEY
 
 import json
@@ -16,7 +14,7 @@ def pickServer() -> str:
 
 def isReplicaBusy(ip: str) -> bool:
     try:
-        urllib.request.urlopen(f"http://{ip}/", timeout=4).readlines()
+        urllib.request.urlopen(f"http://{ip}/", timeout=3).readlines()
         return False
     except:
         return True

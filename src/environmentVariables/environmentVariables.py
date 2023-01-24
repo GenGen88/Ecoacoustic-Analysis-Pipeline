@@ -3,6 +3,7 @@ from util.calendar import generateSeasonsList, getAudioDate
 from environmentVariables.report.generateReport import generateReport
 from birdnet.birdNetResults import readBirdnetResults
 from environmentVariables.weatherData.weatherData import getWeatherDataResult
+from environmentVariables.wetDry import isWetAudioRecording
 
 from util.constants import DIR_BIRDNET_OUT_FILE_PATH
 
@@ -19,4 +20,6 @@ def createEnvironmentVariablesCSV(filePath) -> None:
 
     weatherData = getWeatherDataResult(audioDateData)
 
-    generateReport(birdNetData, audioDateData, seasonData, weatherData)
+    isWetAudio = isWetAudioRecording(filePath)
+
+    generateReport(birdNetData, audioDateData, seasonData, isWetAudio, weatherData)

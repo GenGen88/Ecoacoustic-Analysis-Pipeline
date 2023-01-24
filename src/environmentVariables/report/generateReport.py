@@ -5,13 +5,14 @@ def generateReport(
     birdNetRows = [],
     dateRows = [],
     seasonsRows = [],
+    isWetAudio = False,
     weatherRows = []
 ) -> None:
     if not pathExists(DIR_REPORT_OUT_FILE_PATH):
         generateReportHeaders()
 
     for rowIndex in range(2, len(birdNetRows)):
-        rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]},{weatherRows[rowIndex]}"
+        rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]},{isWetAudio},{weatherRows[rowIndex]}"
         rowContent = sanitizeString(rowContent)
 
         # # Uncomment for verbose logging

@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const shell = require("shelljs");
+const https = require("https");
 
 // constants
 const reportLocation = "../out/report.csv";
@@ -27,7 +28,7 @@ app.get("/analysis_jobs/new", (req, res) => {
   const analysisFilePath = req.query.filePath;
 
   if (!hasValue(analysisFilePath)) {
-    res.send("Please include your file path in the ?q=filePath url parameter");
+    res.send("Please include your file path in the ?filePath= url parameter");
     return;
   }
 
@@ -39,6 +40,24 @@ app.get("/analysis_jobs/new", (req, res) => {
 
   // start the entry point shell script for the program
   shell.exec(`${analysisScriptPath} ${analysisFilePath}`);
+});
+
+app.get("/audio_recordings/download", (req, res) => {
+  const audioRecordingId = req.query.id;
+
+  if (!hasValue(audioRecordingId)) {
+    res.send("Please include your audio recording id in the ?id= url parameter");
+    return;
+  }
+
+  // the analysis job will start
+  console.log(`Downloading new audio recording ${audioRecordingId}`);
+
+  const apiEndpoint = "https://api.acousticobservatory.org/audio_recordings";
+  const url = `${apiEndpoint}/${audioRecordingId}/original`;
+  https.get(url, (res) => {
+    const path = `./in/recording_${audioRecordingId}`;
+  });
 });
 
 app.listen(port, () => {
