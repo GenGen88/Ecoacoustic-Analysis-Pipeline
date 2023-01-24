@@ -14,6 +14,11 @@ def initConsole():
     print()
     print(CONSOLE_INIT_MESSAGE)
     print("\n" * 2)
+    print("Please ensure that you have run EMU on the audio files before continuing")
+
+def closeConsole(exitCode: int = 0) -> None:
+    print("\nDone!")
+    exit(exitCode)
 
 def writeToFile(path: str, contents: str) -> None:
     with open(path, "a") as fp:

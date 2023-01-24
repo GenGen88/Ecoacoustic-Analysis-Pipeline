@@ -10,6 +10,7 @@ DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1
+PIPELINE_MODE_CLA_POSITION = 2
 
 VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 
