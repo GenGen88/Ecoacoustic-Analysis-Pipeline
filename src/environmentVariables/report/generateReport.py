@@ -12,7 +12,7 @@ def generateReport(
         generateReportHeaders()
 
     for rowIndex in range(2, len(birdNetRows)):
-        rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]},{isWetAudio},{weatherRows[rowIndex]}"
+        rowContent = f"{birdNetRows[rowIndex]},{dateRows[rowIndex]},{seasonsRows[rowIndex]},{isWetAudio}"
         rowContent = sanitizeString(rowContent)
 
         # # Uncomment for verbose logging

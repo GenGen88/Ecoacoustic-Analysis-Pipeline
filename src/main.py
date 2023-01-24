@@ -26,7 +26,8 @@ if __name__ == "__main__":
             print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
             pipelineMode = True
 
-    while (pipelineMode):
+    isFirstRun = True
+    while (pipelineMode or isFirstRun):
         # check that the audio file or directory exists
         if not pathExists(audioInFilePath):
             throwError(ERROR_404_MESSAGE)
@@ -37,6 +38,10 @@ if __name__ == "__main__":
 
         for file in allFiles:
             createEnvironmentVariablesCSV(file)
-            deleteFile(file)
+            
+            if pipelineMode:
+                deleteFile(file)
+        
+        isFirstRun = False
 
     closeConsole()

@@ -18,8 +18,9 @@ def createEnvironmentVariablesCSV(filePath) -> None:
     audioDateData = getAudioDate(filePath, birdNetDataLength)
     seasonData = generateSeasonsList(audioDateData)
 
-    weatherData = getWeatherDataResult(audioDateData)
+    # TODO: get weather data working
+    # weatherData = getWeatherDataResult(audioDateData)
 
     isWetAudio = isWetAudioRecording(filePath)
 
-    generateReport(birdNetData, audioDateData, seasonData, isWetAudio, weatherData)
+    generateReport(birdNetData, audioDateData, seasonData, isWetAudio)

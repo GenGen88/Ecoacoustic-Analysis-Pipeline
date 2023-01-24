@@ -1,4 +1,4 @@
-from util.util import deleteFile, isFolder, throwError, fileExists, directoryFiles, readFile
+from util.util import deleteFile, isFolder, throwError, fileExists, directoryFiles, readFile, writeToFile
 from environmentVariables.weatherData.constants import WEATHER_DATA_START_INDEX, WEATHER_FETCHER_SCRIPT_PATH
 from util.constants import DIR_WEATHER_IN_FILE_PATH
 
@@ -34,4 +34,5 @@ def aggregateCSVFiles(inPath: str, outPath: str = "./out/weatherData.csv") -> st
 
             totalFile += line
 
+    writeToFile(outPath, totalFile)
     return totalFile
