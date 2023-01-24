@@ -1,20 +1,30 @@
+from cmath import exp
+from socket import timeout
 from util.constants import CONFIG_FILE_PATH, REPLICA_SERVERS_JSON_KEY
 
 import json
+import urllib
 
 def pickServer() -> str:
-    configFP = open(CONFIG_FILE_PATH)
-
-    configContents = json.load(configFP)
+    serverList = getAllServers()
 
     while (True):
-        for server in configContents[REPLICA_SERVERS_JSON_KEY]:
+        for server in serverList:
             if not isReplicaBusy(server):
                 return server
 
 
 def isReplicaBusy(ip: str) -> bool:
-    return False
+    try:
+        urllib.request.urlopen(f"http://{ip}/", timeout=4).readlines()
+        return False
+    except:
+        return True
 
 def getAllServers():
+    configFP = open(CONFIG_FILE_PATH)
+    configContents = json.load(configFP)
+    return configContents[REPLICA_SERVERS_JSON_KEY]
+
+def startJob(audioRecordingId: str):
     pass
