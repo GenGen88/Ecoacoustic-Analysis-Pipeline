@@ -5,17 +5,22 @@ ERROR_INVALID_DATE_ERROR_MESSAGE = "invalid date found..."
 
 # working directory constants
 DIR_OUT_DIRECTORY = "./out/"
+DIR_IN_DIRECTORY = "./data/"
+
+DIR_WEATHER_IN_FILE_PATH = f"{DIR_IN_DIRECTORY}"
+
 DIR_BIRDNET_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}birdnet-results.csv"
+DIR_WEATHER_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}weather.csv"
 DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1
-PIPELINE_MODE_CLA_POSITION = 2
+CLA_PIPELINE_MODE_CLA_POSITION = 2
 
 VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 
 # misc
-COLUMN_HEADERS = "Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence,date,season\n"
+COLUMN_HEADERS = "Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence,date,season,isWet,date,min-temp,max-temp,rainfall,evaporation,sunshine,wind-direction,wind-speed,wind-time-of-measurement,9am-temp,9am-humidity,9am-cloud-amount,9am-wind-direction,9am-wind-speed,9am-pressure,3pm-Temperature,3pm-relative-humidity,3pm-cloud-amount,3pm-wind-direction,3pm-wind-speed,3pm-pressure\n"
 
 CONSOLE_INIT_MESSAGE = """
 VRES Analyser
