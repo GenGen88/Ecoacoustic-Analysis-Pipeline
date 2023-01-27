@@ -44,6 +44,16 @@ wet_winter_detections <- ev %>% filter(heat == 1 & isWet == T)
 wet_winter_richness <- wet_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
 wet_winter_biodiversity <- wet_winter_richness / (wet_winter_detections %>% count())
 
+
+# genna stuff
+wet_winter_
+wet_winter_richness2 <- wet_summer_detections select
+wet_winter_biodiversity_recalc <- wet_winter_detections %>%
+  select(CommonName) %>%
+  mutate(n_over_N_squared = ((CommonName / sum(CommonName)^2)),
+         Biodiverity = (1-sum(n_over_N_squared)))
+
+
 wet_summer_detections <- ev %>% filter(heat == 3 & isWet == T)
 wet_summer_richness <- wet_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
 wet_summer_biodiversity <- wet_summer_richness / (wet_summer_detections %>% count())
@@ -57,3 +67,6 @@ results <- bind_rows(
 
 row.names(results)[0] <- 99
 
+
+
+t.test(wet_summer_richness, dry_summer_richess, paired = TRUE, alternative = "two.sided")
