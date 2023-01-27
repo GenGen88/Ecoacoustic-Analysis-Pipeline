@@ -4,9 +4,9 @@ library(dplyr)
 
 csv_in <- read_csv("./analysis_results.csv") %>% tibble()
 
-# since BirdNet logs results with accuracy < 0.8, we need to discard these results
+# since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence > 0.8) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.8) %>% subset(select = -season)
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
@@ -23,10 +23,10 @@ df <- df %>% mutate(month =
 
 ev <- df %>% mutate(heat =
   case_when(
-    month == "12" | month == "01" | month == "02" ~ "summer",
-    month == "06" | month == "07" | month == "08" ~ "winter",
-    month == "03" | month == "04" | month == "05" ~ "autumn",
-    month == "09" | month == "10" | month == "11" ~ "spring"
+    month == "12" | month == "01" | month == "02" ~ 3,
+  month == "06" | month == "07" | month == "08" ~ 1,
+    month == "03" | month == "04" | month == "05" ~ 2,
+    month == "09" | month == "10" | month == "11" ~ 2
   )
 )
 
