@@ -23,9 +23,10 @@ df <- df %>% mutate(month =
 
 ev <- df %>% mutate(heat =
   case_when(
-    month == "12" | month == "01" | month == "02" ~ 3,
-    month == "06" | month == "07" | month == "08" ~ 1,
-    month == "03" | month == "04" | month == "05" | month == "09" | month == "10" | month == "11" ~ 2
+    month == "12" | month == "01" | month == "02" ~ "summer",
+    month == "06" | month == "07" | month == "08" ~ "winter",
+    month == "03" | month == "04" | month == "05" ~ "autumn",
+    month == "09" | month == "10" | month == "11" ~ "spring"
   )
 )
 
