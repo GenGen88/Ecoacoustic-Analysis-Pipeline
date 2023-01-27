@@ -1,5 +1,10 @@
+from util.util import fileExists
+
 def readBirdnetResults(filename: str):
     birdNetRows = [] # create array to hold rows
+
+    if not fileExists(filename):
+        return None
 
     with open(filename, "r") as fp:
         fileLines = fp.readlines()

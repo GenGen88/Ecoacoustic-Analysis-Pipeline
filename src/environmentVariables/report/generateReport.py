@@ -1,4 +1,4 @@
-from util.util import writeToFile, pathExists, sanitizeString
+from util.util import writeToFile, pathExists, sanitizeString, fileExists
 from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS
 
 def generateReport(
