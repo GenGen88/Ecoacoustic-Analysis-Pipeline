@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm ./out/birdnet-results.csv;
+
 if [ ! -d "./src/lib/BirdNET-Analyzer/" ]; then
     ./src/setup_lib.sh;
 fi
