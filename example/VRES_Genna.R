@@ -5,22 +5,23 @@ library(dplyr)
 data1 <- read.csv("C:\\Users\\gldia\\OneDrive\\Documents\\VRES-Analyser\\example\\report.csv", header=TRUE, stringsAsFactors = FALSE)
 # import data from ubuntu thing
 data1 <- read.csv("C:\\Users\\gldia\\Documents\\report.csv",header=TRUE, stringsAsFactors = FALSE)
+# filter data to only include data with confidence greater than 0.5
 filteredData <- filter(data1, data1$Confidence >0.5)
 
 # table of just species and time
-speciesTimeData <-data.frame(data1$CommonName, data1$date)
+speciesTimeData <-data.frame(filteredData$CommonName, filteredData$date)
 colnames(speciesTimeData) = c("CommonName", "Date")
 
 # generates just the species name data
-speciesData <-data.frame(data1$CommonName)
+speciesData <-data.frame(filteredData$CommonName)
 colnames(speciesData) = c("CommonName")
 
 #generates a table of how many times a species appeared
-richness <- speciesData %>% count(data1.CommonName)
+richness <- speciesData %>% count(filteredData.CommonName)
 colnames(richness) = c("CommonName", "Frequency")
 
 #generates a table of species richness over date
-richnessDate <- speciesTimeData %>% group_by(data1$date)%>% count(data1$date)
+richnessDate <- speciesTimeData %>% group_by(filteredData$date)%>% count(filteredData$date)
 colnames(richnessDate) = c("Date", "Richness")
 
 # graph richness over time (point form)
@@ -43,7 +44,7 @@ Diversity <- richness %>%
          Biodiverity = (1-sum(n_over_N_squared)))
 
 # table of just season + commonName
-seasons <- data.frame(data1$CommonName, data1$season)
+seasons <- data.frame(filteredData$CommonName, filteredData$season)
 colnames(seasons) = c("CommonName", "Season")
 
 # table of richness over season
@@ -58,6 +59,46 @@ ggplot(data = richnessSeason, aes(x = Season))+
   xlab("Season")+
   ylab("Species Richness")
   
+# table commonName and wet v dry (should work with future data)
+Location <- data.frame(filteredData$CommonName, filteredData$Location)
+colnames(Location) = c("CommonName", "Location")
+                            
+# table richness + wet/dry
+LocationRichness <- Location %>% group_by(Location) %>% count(Location)
+colnames(LocationRichness) = c("Location", "Richness")
+
+# isolate wet richness
+wetRichness <- filter(LocationRichness, Location = "wet")
+
+# calculate biodiversity of wet
+wetDiversity <- wetRichness %>%
+  select(Location, Richness) %>%
+  mutate(n_over_N_squared = ((Richness / sum(Richness)^2)),
+         Biodiverity = (1-sum(n_over_N_squared)))
+# isolate just biodiversity
+wetBiodiveristy <- wetDiversity %>% group_by(Biodiversity)
+
+# isolate dry richness
+dryRichness <- filter(LocationRichness, Location = "dry")
+# calculate biodiversity of Dry
+dryDiversity <- dryRichness %>%
+  select(Location, Richness) %>%
+  mutate(n_over_N_squared = ((Richness / sum(Richness)^2)),
+         Biodiverity = (1-sum(n_over_N_squared)))
+# isolate just biodiversity
+dryBiodiveristy <- dryDiversity %>% group_by(Biodiversity)
+
+# merge wet and dry biodiversity table??
+MergedBiodiversity <- merge.data.frame(wetBiodiveristy, dryBiodiveristy, by = "Biodiversity")
+
+# bar graph richness over wet/dry
+ggplot(data = MergedBiodiversity, aes(x = Location))+
+  geom_bar()+
+  ggtitle("Biodiveresity by Sensor Location")+
+  theme_bw()+
+  xlab("Location")+
+  ylab("Biodiversity")
+
 # biodiversity??
 n <- richness$Frequency
 N <- sum(richness$Frequency)
