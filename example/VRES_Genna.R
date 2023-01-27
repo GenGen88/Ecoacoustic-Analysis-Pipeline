@@ -2,9 +2,7 @@ library(tidyverse)
 library(dplyr)
 
 # import data from VRES example
-data1 <- read.csv("C:\\Users\\gldia\\OneDrive\\Documents\\VRES-Analyser\\example\\report.csv", header=TRUE, stringsAsFactors = FALSE)
-# import data from ubuntu thing
-data1 <- read.csv("C:\\Users\\gldia\\Documents\\report.csv",header=TRUE, stringsAsFactors = FALSE)
+data1 <- read.csv("./analysis_results.csv", header=TRUE, stringsAsFactors = FALSE)
 # filter data to only include data with confidence greater than 0.5
 filteredData <- filter(data1, data1$Confidence >0.5)
 
@@ -17,7 +15,7 @@ speciesData <-data.frame(filteredData$CommonName)
 colnames(speciesData) = c("CommonName")
 
 #generates a table of how many times a species appeared
-richness <- speciesData %>% count(filteredData.CommonName)
+richness <- speciesData %>% count(filteredData$CommonName)
 colnames(richness) = c("CommonName", "Frequency")
 
 #generates a table of species richness over date

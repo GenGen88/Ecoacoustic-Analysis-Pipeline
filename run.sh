@@ -1,3 +1,4 @@
+#!/bin/bash
 #installs a local virtual environment
 initilize_python_virtual_environment() {
     # check what python version to use
