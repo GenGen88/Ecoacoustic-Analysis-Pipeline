@@ -5,6 +5,11 @@ library(dplyr)
 data1 <- read.csv("C:\\Users\\gldia\\OneDrive\\Documents\\VRES-Analyser\\example\\report.csv", header=TRUE, stringsAsFactors = FALSE)
 # import data from ubuntu thing
 data1 <- read.csv("C:\\Users\\gldia\\Documents\\report.csv",header=TRUE, stringsAsFactors = FALSE)
+# import data from Downloads (Hundon's big csv)
+data1 <- read.csv("C:\\Users\\gldia\\Downloads\\analysis_results.csv")
+colnames(data1) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "Speciescode", "CommonName", "Confidence", "date", "season", "Location")
+
+deleteDuplicates <- data1[!duplicated(data1),]
 # filter data to only include data with confidence greater than 0.5
 filteredData <- filter(data1, data1$Confidence >0.5)
 
@@ -17,7 +22,7 @@ speciesData <-data.frame(filteredData$CommonName)
 colnames(speciesData) = c("CommonName")
 
 #generates a table of how many times a species appeared
-richness <- speciesData %>% count(filteredData.CommonName)
+richness <- speciesData %>% count(filteredData$CommonName)
 colnames(richness) = c("CommonName", "Frequency")
 
 #generates a table of species richness over date
@@ -68,7 +73,7 @@ LocationRichness <- Location %>% group_by(Location) %>% count(Location)
 colnames(LocationRichness) = c("Location", "Richness")
 
 # isolate wet richness
-wetRichness <- filter(LocationRichness, Location = "wet")
+wetRichness <- filter(LocationRichness, Location == "True")
 
 # calculate biodiversity of wet
 wetDiversity <- wetRichness %>%
@@ -79,7 +84,7 @@ wetDiversity <- wetRichness %>%
 wetBiodiveristy <- wetDiversity %>% group_by(Biodiversity)
 
 # isolate dry richness
-dryRichness <- filter(LocationRichness, Location = "dry")
+dryRichness <- filter(LocationRichness, Location == "False")
 # calculate biodiversity of Dry
 dryDiversity <- dryRichness %>%
   select(Location, Richness) %>%
