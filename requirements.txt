@@ -3,4 +3,3 @@ tensorflow
 librosa
 numpy
 numba
-pandas
