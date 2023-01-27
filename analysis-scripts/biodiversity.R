@@ -3,6 +3,7 @@ library(GGally)
 library(dplyr)
 
 csv_in <- read_csv("./analysis_results.csv") %>% tibble()
+colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
@@ -64,3 +65,4 @@ wet_p0 <- (wet_summer_biodiversity + wet_winter_biodiversity) / ((wet_summer_det
 wet_population_Z <-(wet_summer_biodiversity / wet_winter_biodiversity) / (sqrt(wet_p0) * (1 - wet_p0) * (wet_winter_detections %>% count() + wet_summer_detections %>% count()))
 
 # 0.1150728 !> 0.1150728
+
