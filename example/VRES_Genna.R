@@ -2,6 +2,7 @@ library(tidyverse)
 library(dplyr)
 
 # import data from VRES example
+<<<<<<< HEAD
 data1 <- read.csv("C:\\Users\\gldia\\OneDrive\\Documents\\VRES-Analyser\\example\\report.csv", header=TRUE, stringsAsFactors = FALSE)
 # import data from ubuntu thing
 data1 <- read.csv("C:\\Users\\gldia\\Documents\\report.csv",header=TRUE, stringsAsFactors = FALSE)
@@ -10,6 +11,9 @@ data1 <- read.csv("C:\\Users\\gldia\\Downloads\\analysis_results.csv")
 colnames(data1) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "Speciescode", "CommonName", "Confidence", "date", "season", "Location")
 
 deleteDuplicates <- data1[!duplicated(data1),]
+=======
+data1 <- read.csv("./analysis_results.csv", header=TRUE, stringsAsFactors = FALSE)
+>>>>>>> 8887a6e9f4bfaea989e01a5cb680d733b05481d8
 # filter data to only include data with confidence greater than 0.5
 filteredData <- filter(data1, data1$Confidence >0.5)
 
