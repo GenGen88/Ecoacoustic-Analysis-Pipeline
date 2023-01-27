@@ -36,14 +36,40 @@ ggplot(data=richnessDate, aes(x= Date, y = Richness))+
   theme_bw()+
   ggtitle("Species Richness Over Time")
 
- # biodiversity over time????
+# calculates biodiversity of whole dataset
+Diversity <- richness %>%
+  select(CommonName, Frequency) %>%
+  mutate(n_over_N_squared = ((Frequency / sum(Frequency)^2)),
+         Biodiverity = (1-sum(n_over_N_squared)))
+
+# table of just season + commonName
+seasons <- data.frame(data1$CommonName, data1$season)
+colnames(seasons) = c("CommonName", "Season")
+
+# table of richness over season
+richnessSeason <- seasons %>% group_by(Season) %>% count(Season)
+colnames(richnessSeason) = c("Season", "Richness")
+
+# bar graph richness over season
+ggplot(data = richnessSeason, aes(x = Season))+
+  geom_bar()+
+  theme_bw()+
+  ggtitle("Species Richness per Season")+
+  xlab("Season")+
+  ylab("Species Richness")
+  
+# biodiversity??
 n <- richness$Frequency
 N <- sum(richness$Frequency)
+returnValue(N)
+returnValue(n)
 parms <- c(n,N)
 calculate_biodiversity <- function(parms){
   n <- parms[1]
   N <- parms[2]
   # function
-  biodiversity <- 1-(sum(n/N)^2)
-  return(biodiversity)
+  biodiversity <- 1-(sum((n/N)^2))
+  returnValue(biodiversity)
 }
+calculate_biodiversity(parms)
+
