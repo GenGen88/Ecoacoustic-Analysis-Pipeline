@@ -3,6 +3,7 @@ library(GGally)
 library(dplyr)
 
 csv_in <- read_csv("./analysis_results.csv") %>% tibble()
+colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
@@ -55,3 +56,4 @@ results <- bind_rows(
 ) %>% tibble()
 
 row.names(results)[0] <- 99
+
