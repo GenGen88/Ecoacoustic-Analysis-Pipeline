@@ -44,7 +44,7 @@ if __name__ == "__main__":
         # so assert that the previous audio recording was successfully downloaded by asserting that
         # there is a new download that has started.
         # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
-        if len(allFiles < 2 and not isFirstRun):
+        if len(allFiles) < 2 and not isFirstRun:
             continue
 
         for file in allFiles:
