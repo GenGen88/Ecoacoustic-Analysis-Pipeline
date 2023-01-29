@@ -26,6 +26,9 @@ if __name__ == "__main__":
             print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
             pipelineMode = True
 
+    # to ensure that this program still works without pipeline mode
+    # it needs to run and quit once the pipeline has completed once by default
+    # therefore, we can check if it is the first run. The pipeline should always complete once
     isFirstRun = True
     while (pipelineMode or isFirstRun):
         # check that the audio file or directory exists
@@ -34,7 +37,15 @@ if __name__ == "__main__":
 
         allFiles = directoryFiles(audioInFilePath)
 
+        # TODO: this should only print out if the --verbose flag is used
         print(f"Files to analyze: {allFiles}")
+
+        # before analyzing files, they need to be fully downloaded
+        # so assert that the previous audio recording was successfully downloaded by asserting that
+        # there is a new download that has started.
+        # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
+        if len(allFiles < 2 and not isFirstRun):
+            continue
 
         for file in allFiles:
             createEnvironmentVariablesCSV(file)

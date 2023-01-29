@@ -7,7 +7,7 @@ colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "Lo
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence >= 0.8) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.85) %>% subset(select = -season)
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
@@ -66,8 +66,7 @@ dry_n2 <- dry_winter_detections %>% count()
 
 # Z = (p1-p2)/sqrt(p0*(1-p0)*(1/n1+1/n2))
 dry_Z <- (dry_x1 - dry_x2) / sqrt( dry_p0 * ( 1 - dry_p0 ) * ((1 / dry_n1) + (1 / dry_n2)) )
-
-# 4.32976 > 1.96
+# 10.70703
 
 wet_p0 <- (wet_summer_biodiversity + wet_winter_biodiversity) / ((wet_summer_detections %>% count()) + (wet_winter_detections %>% count()))
 wet_x1 <- wet_summer_biodiversity
@@ -76,6 +75,4 @@ wet_n1 <- wet_summer_detections %>% count()
 wet_n2 <- wet_winter_detections %>% count()
 
 wet_Z <- (wet_x1 - wet_x2) / sqrt( wet_p0 * (1 - wet_p0) * ((1 / wet_n1) + (1 / wet_n2)))
-
-# 0.1150728 !> 1.96
-
+# 0.1378728
