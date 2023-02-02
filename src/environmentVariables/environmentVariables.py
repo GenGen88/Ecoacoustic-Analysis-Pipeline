@@ -15,7 +15,7 @@ def createEnvironmentVariablesCSV(filePath) -> None:
     birdNetData = readBirdnetResults(DIR_BIRDNET_OUT_FILE_PATH)
 
     if (birdNetData == None):
-        print("could not find birdnet output. Your audio file may be corrupted")
+        print("could not find birdnet output. Your audio file may be corrupted\n")
         return 1
 
     birdNetDataLength = len(birdNetData)

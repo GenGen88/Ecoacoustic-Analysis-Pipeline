@@ -2,6 +2,8 @@ from environmentVariables.environmentVariables import createEnvironmentVariables
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile
 from util.initDirectory import validateDirectoryStructure
 
+from analysis.runAnalysisScripts import runAnalysis
+
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION
 
 import sys
@@ -26,6 +28,9 @@ if __name__ == "__main__":
             print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
             pipelineMode = True
 
+    # to ensure that this program still works without pipeline mode
+    # it needs to run and quit once the pipeline has completed once by default
+    # therefore, we can check if it is the first run. The pipeline should always complete once
     isFirstRun = True
     while (pipelineMode or isFirstRun):
         # check that the audio file or directory exists
@@ -34,9 +39,17 @@ if __name__ == "__main__":
 
         allFiles = directoryFiles(audioInFilePath)
 
+        # TODO: this should only print out if the --verbose flag is used
         print(f"Files to analyze: {allFiles}")
 
-        for file in allFiles:
+        # before analyzing files, they need to be fully downloaded
+        # so assert that the previous audio recording was successfully downloaded by asserting that
+        # there is a new download that has started.
+        # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
+        if len(allFiles) <= 2 and not isFirstRun:
+            continue
+
+        for file in allFiles.reverse():
             createEnvironmentVariablesCSV(file)
             
             if pipelineMode:
@@ -44,4 +57,9 @@ if __name__ == "__main__":
         
         isFirstRun = False
 
+    # the second part of this program is to analyze the relationship between environment variables
+    # runAnalysis(DIR_TOTAL_REPORT_OUT_FILE_PATH)
+
+    # since this is a CLI application, close it in a standard way
+    # this is not needed, but I find it to be best practice
     closeConsole()

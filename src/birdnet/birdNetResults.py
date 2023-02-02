@@ -6,6 +6,7 @@ def readBirdnetResults(filename: str):
     if not fileExists(filename):
         return None
 
+    # TODO: we should probably move this to a util method
     with open(filename, "r") as fp:
         fileLines = fp.readlines()
         fileLinesCount = len(fileLines)

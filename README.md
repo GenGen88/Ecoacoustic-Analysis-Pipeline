@@ -12,7 +12,14 @@
 - acoustic indices
 - vegetation?
 
-## How to Use
+## Required Tools
+
+- Python3
+- R
+- NodeJS
+- NPM
+- Git
+- GNU/Linux Environment (tested on Ubuntu & OpenSuse)
 
 ### Install
 
