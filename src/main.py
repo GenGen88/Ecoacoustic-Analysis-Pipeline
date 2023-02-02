@@ -59,4 +59,7 @@ if __name__ == "__main__":
 
     # the second part of this program is to analyze the relationship between environment variables
     runAnalysis()
-    closeConsole()
+
+    # since this is a CLI application, close it in a standard way
+    # this is not needed, but I find it to be best practice
+    closeConsowle()

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-# check that R is installed before running the analysis scripts
+R ./src/analysis/scripts/biodiversity.R;
