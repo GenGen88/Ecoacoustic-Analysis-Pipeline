@@ -12,6 +12,8 @@ DIR_WEATHER_IN_FILE_PATH = f"{DIR_IN_DIRECTORY}"
 DIR_BIRDNET_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}birdnet-results.csv"
 DIR_WEATHER_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}weather.csv"
 DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
+# there are some post processing checks done before the final
+DIR_TOTAL_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}final_report.csv"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1

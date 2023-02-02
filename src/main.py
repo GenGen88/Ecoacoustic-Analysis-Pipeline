@@ -46,10 +46,10 @@ if __name__ == "__main__":
         # so assert that the previous audio recording was successfully downloaded by asserting that
         # there is a new download that has started.
         # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
-        if len(allFiles) < 2 and not isFirstRun:
+        if len(allFiles) <= 2 and not isFirstRun:
             continue
 
-        for file in allFiles:
+        for file in allFiles.reverse():
             createEnvironmentVariablesCSV(file)
             
             if pipelineMode:
@@ -62,4 +62,4 @@ if __name__ == "__main__":
 
     # since this is a CLI application, close it in a standard way
     # this is not needed, but I find it to be best practice
-    closeConsowle()
+    closeConsole()
