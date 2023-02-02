@@ -107,7 +107,7 @@ ggplot(data = MergedBiodiversity, aes(x = Location))+
   ylab("Biodiversity")
 
 # t test
-t.test(richnessDate$Date, richnessDate$Richness, paired = TRUE, alternative = "two.sided")
+t.test(wetRichness$Richness, dryRichness$Richness, paired = TRUE, alternative = "two.sided")
 
 # biodiversity??
 n <- richness$Frequency

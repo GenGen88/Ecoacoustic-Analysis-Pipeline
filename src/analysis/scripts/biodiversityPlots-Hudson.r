@@ -86,4 +86,14 @@ data <- full_join(dataDry, dataWet)
 
 data %>% ggplot(aes(x = Season, y = Biodiversity, color = IsWet)) +
   geom_point(size = 4) +
-  ggtitle("Biodiversity / Seasons")
+  ggtitle("Ecoacoustic Biodiversity Over Seasons")+
+  guides(color=guide_legend(title="Location"))+
+  scale_color_hue(labels = c("Dry", "Wet"))
+
+dataWet %>% ggplot(aes(x = Season, y = Biodiversity)) +
+  geom_point(size = 4) +
+  ggtitle("Ecoacoustic Biodiversity of Wet Sensor Over Seasons")
+  
+dataDry %>% ggplot(aes(x = Season, y = Biodiversity)) +
+  geom_point(size = 4) +
+  ggtitle("Ecoacoustic Biodiversity of Dry Sensor Over Seasons")

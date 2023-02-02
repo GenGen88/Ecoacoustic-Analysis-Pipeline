@@ -17,10 +17,7 @@ df <- df %>% mutate(month =
   )
 )
 
-# environment variables
-# heat = 1 is winter
-# heat = 2 is spring or autumn
-# heat = 3 is summer
+
 
 ev <- df %>% mutate(heat =
   case_when(
@@ -45,13 +42,6 @@ wet_winter_richness <- wet_winter_detections %>% select(SpeciesCode) %>% unique(
 wet_winter_biodiversity <- wet_winter_richness / (wet_winter_detections %>% count())
 
 
-# genna stuff
-wet_winter_
-wet_winter_richness2 <- wet_summer_detections select
-wet_winter_biodiversity_recalc <- wet_winter_detections %>%
-  select(CommonName) %>%
-  mutate(n_over_N_squared = ((CommonName / sum(CommonName)^2)),
-         Biodiverity = (1-sum(n_over_N_squared)))
 
 
 wet_summer_detections <- ev %>% filter(heat == 3 & isWet == T)
