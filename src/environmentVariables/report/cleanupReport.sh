@@ -6,4 +6,4 @@
 
 # CLA at position 1 represents the in file, while CLA position 2 represents the out file
 
-sort -u $1 > $2;
+sort -u $1 >> $2;
