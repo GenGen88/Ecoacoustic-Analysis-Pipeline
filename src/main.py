@@ -49,7 +49,7 @@ if __name__ == "__main__":
         if len(allFiles) <= 2 and not isFirstRun:
             continue
 
-        for file in allFiles.reverse():
+        for file in allFiles:
             createEnvironmentVariablesCSV(file)
             
             if pipelineMode:

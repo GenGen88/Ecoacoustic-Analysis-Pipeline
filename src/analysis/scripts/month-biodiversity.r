@@ -98,29 +98,46 @@ resultsData <- bind_rows(
   bind_cols(3, DmarBiodiversity, F),
   bind_cols(4, DaprBiodiversity, F),
   bind_cols(5, DmayBiodiversity, F),
-  bind_cols("Jun", DjunBiodiversity, F),
-  bind_cols("Jul", DjulBiodiversity, F),
-  bind_cols("Aug", DaugBiodiversity, F),
-  bind_cols("Sep", DsepBiodiversity, F),
-  bind_cols("Oct", DoctBiodiversity, F),
-  bind_cols("Nov", DnovBiodiversity, F),
-  bind_cols("Dec", DdevBiodiversity, F),
-  bind_cols("Jan", WjanBiodiversity, T),
-  bind_cols("Feb", WfebBiodiversity, T),
-  bind_cols("Mar", WmarBiodiversity, T),
-  bind_cols("Apr", WaprBiodiversity, T),
-  bind_cols("May", WmayBiodiversity, T),
-  bind_cols("Jun", WjunBiodiversity, T),
-  bind_cols("Jul", WjulBiodiversity, T),
-  bind_cols("Aug", WaugBiodiversity, T),
-  bind_cols("Sep", WsepBiodiversity, T),
-  bind_cols("Oct", WoctBiodiversity, T),
-  bind_cols("Nov", WnovBiodiversity, T),
-  bind_cols("Dec", WdevBiodiversity, T),
+  bind_cols(6, DjunBiodiversity, F),
+  bind_cols(7, DjulBiodiversity, F),
+  bind_cols(8, DaugBiodiversity, F),
+  bind_cols(9, DsepBiodiversity, F),
+  bind_cols(10, DoctBiodiversity, F),
+  bind_cols(11, DnovBiodiversity, F),
+  bind_cols(12, DdevBiodiversity, F),
+  bind_cols(1, WjanBiodiversity, T),
+  bind_cols(2, WfebBiodiversity, T),
+  bind_cols(3, WmarBiodiversity, T),
+  bind_cols(4, WaprBiodiversity, T),
+  bind_cols(5, WmayBiodiversity, T),
+  bind_cols(6, WjunBiodiversity, T),
+  bind_cols(7, WjulBiodiversity, T),
+  bind_cols(8, WaugBiodiversity, T),
+  bind_cols(9, WsepBiodiversity, T),
+  bind_cols(10, WoctBiodiversity, T),
+  bind_cols(11, WnovBiodiversity, T),
+  bind_cols(12, WdevBiodiversity, T),
 ) %>% tibble()
 
 colnames(resultsData)[1] <- "Month"
 colnames(resultsData)[2] <- "Biodiversity"
 colnames(resultsData)[3] <- "IsWet"
 
-resultsData %>% ggplot(aes(x = Month, y = Biodiversity, color = IsWet)) + geom_point()
+resultsData %>% ggplot(aes(x = Month, y = Biodiversity, color = IsWet)) + 
+  geom_point()+
+  scale_x_continuous(breaks = seq(1,12, by =1)) + 
+  ggtitle("Ecoacoustic Biodiversity Over Months")+
+  guides(color=guide_legend(title="Location"))+
+  scale_color_hue(labels = c("Dry", "Wet"))
+
+## GLM stuff
+glm(Month~Biodiversity, data = resultsData, family = "gaussian")
+
+WetResults <- resultsData %>% filter(IsWet == T)
+DryResults <- resultsData %>% filter(IsWet == F)
+
+wetGlm <- glm(Month~Biodiversity, data = WetResults, family = "gaussian")
+dryGlm <- glm(Month~Biodiversity, data = DryResults, family = "gaussian")
+
+summary(wetGlm)
+summary(dryGlm)
