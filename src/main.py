@@ -2,6 +2,8 @@ from environmentVariables.environmentVariables import createEnvironmentVariables
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile
 from util.initDirectory import validateDirectoryStructure
 
+from analysis.runAnalysisScripts import runAnalysis
+
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION
 
 import sys
@@ -55,4 +57,6 @@ if __name__ == "__main__":
         
         isFirstRun = False
 
+    # the second part of this program is to analyze the relationship between environment variables
+    runAnalysis()
     closeConsole()
