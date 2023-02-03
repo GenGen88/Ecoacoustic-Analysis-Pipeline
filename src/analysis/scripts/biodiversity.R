@@ -2,18 +2,7 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
-<<<<<<< HEAD
-# new dataset
-csv_in <- read_csv("./results_final.csv") %>% tibble()
-
-# new dataset 2
 csv_in <- read_csv("./report.csv") %>% tibble()
-
-# old dataset
-csv_in <- read_csv("./analysis_results.csv") %>% tibble()
-=======
-csv_in <- read_csv("./report.csv") %>% tibble()
->>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
@@ -93,8 +82,6 @@ wet_n2 <- wet_winter_detections %>% count()
 wet_Z <- (wet_x1 - wet_x2) / sqrt( wet_p0 * (1 - wet_p0) * ((1 / wet_n1) + (1 / wet_n2)))
 
 # 0.1150728 !> 1.96
-<<<<<<< HEAD
-
 
 # compare both sites z score calcs
 # expected value if there is no difference
@@ -109,5 +96,3 @@ both_Z <- (both_x1 - both_x2) / sqrt( both_p0 * (1 - both_p0) * ((1 / both_n1) +
 
 # z score
 print(both_Z)
-=======
->>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
