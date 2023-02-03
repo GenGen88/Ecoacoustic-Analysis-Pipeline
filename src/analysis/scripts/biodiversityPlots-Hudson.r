@@ -2,7 +2,7 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
-csv_in <- read_csv("./analysis_results.csv") %>% tibble()
+csv_in <- read_csv("./report.csv") %>% tibble()
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results

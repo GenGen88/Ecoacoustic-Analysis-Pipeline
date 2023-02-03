@@ -2,12 +2,12 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
-csv_in <- read_csv("./analysis_results.csv") %>% tibble()
+csv_in <- read_csv("./report.csv") %>% tibble()
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence >= 0.85) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.8) %>% subset(select = -season)
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
@@ -16,8 +16,6 @@ df <- df %>% mutate(month =
     , "%m"
   )
 )
-
-
 
 ev <- df %>% mutate(heat =
   case_when(
@@ -40,9 +38,6 @@ dry_summer_biodiversity <- dry_summer_richess / (dry_summer_detections %>% count
 wet_winter_detections <- ev %>% filter(heat == 1 & isWet == T)
 wet_winter_richness <- wet_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
 wet_winter_biodiversity <- wet_winter_richness / (wet_winter_detections %>% count())
-
-
-
 
 wet_summer_detections <- ev %>% filter(heat == 3 & isWet == T)
 wet_summer_richness <- wet_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
@@ -77,7 +72,3 @@ wet_n2 <- wet_winter_detections %>% count()
 wet_Z <- (wet_x1 - wet_x2) / sqrt( wet_p0 * (1 - wet_p0) * ((1 / wet_n1) + (1 / wet_n2)))
 
 # 0.1150728 !> 1.96
-
-
-
-t.test(wet_summer_richness, dry_summer_richess, paired = TRUE, alternative = "two.sided")

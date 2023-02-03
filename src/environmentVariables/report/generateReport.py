@@ -25,7 +25,7 @@ def generateReport(
     # TODO: this should technically not be in here, but this is good enough for now
     # open the results text file in the users specified text editor
     # openFile(DIR_REPORT_OUT_FILE_PATH)
-    cleanUpReport()
+    # cleanUpReport()
 
 def generateReportHeaders() -> None:
     writeToFile(DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS)
