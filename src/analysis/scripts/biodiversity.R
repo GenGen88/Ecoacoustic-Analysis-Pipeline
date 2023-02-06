@@ -2,6 +2,7 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
+<<<<<<< HEAD
 # new dataset
 csv_in <- read_csv("./results_final.csv") %>% tibble()
 
@@ -10,6 +11,9 @@ csv_in <- read_csv("./report.csv") %>% tibble()
 
 # old dataset
 csv_in <- read_csv("./analysis_results.csv") %>% tibble()
+=======
+csv_in <- read_csv("./report.csv") %>% tibble()
+>>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
@@ -103,6 +107,7 @@ wet_n2 <- wet_winter_detections %>% count()
 wet_Z <- (wet_x1 - wet_x2) / sqrt( wet_p0 * (1 - wet_p0) * ((1 / wet_n1) + (1 / wet_n2)))
 print(wet_Z)
 # 0.1150728 !> 1.96
+<<<<<<< HEAD
 
 
 # calculate z score of summer v winter
@@ -117,26 +122,5 @@ both_n2 <- winter_detections %>% count()
 both_Z <- (both_x1 - both_x2) / sqrt( both_p0 * (1 - both_p0) * ((1 / both_n1) + (1 / both_n2)))
 # z score
 print(both_Z)
-
-# calculate z score of wet v dry
-# expected value if there is no difference
-WD_p0 <- (wet_biodiveresity + dry_biodiveresity) / ((wet_detections %>% count()) + (dry_detections %>% count()))
-# observed values
-WD_x1 <- wet_biodiveresity
-WD_x2 <- dry_biodiveresity
-# observed values / # of observations (means)
-WD_n1 <- wet_detections %>% count()
-WD_n2 <- dry_detections %>% count()
-WD_Z <- (WD_x1 - WD_x2) / sqrt( WD_p0 * (1 - WD_p0) * ((1 / WD_n1) + (1 / WD_n2)))
-# z score
-print(WD_Z)
-
-# calculate z score of wet summer vs dry summer (difference in sites, season constant)
-summer_p0 <- (wet_summer_biodiversity + dry_summer_biodiversity) / ((wet_summer_detections %>% count()) + (dry_summer_detections %>% count()))
-summer_x1 <- wet_summer_biodiversity
-summer_x2 <- dry_summer_biodiversity
-summer_n1 <- wet_summer_detections %>% count()
-summer_n2 <- dry_summer_detections %>% count()
-
-summer_Z <- (summer_x1 - summer_x2) / sqrt( summer_p0 * (1 - summer_p0) * ((1 / summer_n1) + (1 / summer_n2)))
-print(summer_Z)
+=======
+>>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
