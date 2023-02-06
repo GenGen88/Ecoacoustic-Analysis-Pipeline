@@ -3,13 +3,17 @@ library(GGally)
 library(dplyr)
 library(pander)
 
+excluded_results <- c("dogdog", "siren1", "t-11031961")
+
 csv_in <- read_csv("./report.csv") %>% tibble()
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
+
+# there are some animals / objects in the recogniser that we do not want to search for, remove them as part of pre-processing
+csv_in <- csv_in %>% filter(!SpeciesCode %in% excluded_results)
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
 df <- csv_in %>% filter(Confidence >= 0.8) %>% subset(select = -season)
-
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
