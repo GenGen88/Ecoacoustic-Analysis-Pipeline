@@ -2,7 +2,6 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
-<<<<<<< HEAD
 # new dataset
 csv_in <- read_csv("./results_final.csv") %>% tibble()
 
@@ -11,14 +10,11 @@ csv_in <- read_csv("./report.csv") %>% tibble()
 
 # old dataset
 csv_in <- read_csv("./analysis_results.csv") %>% tibble()
-=======
-csv_in <- read_csv("./report.csv") %>% tibble()
->>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence >= 0.8) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.85) %>% subset(select = -season)
 
 
 # add seasonal information to tibble
@@ -28,6 +24,8 @@ df <- df %>% mutate(month =
     , "%m"
   )
 )
+
+
 
 ev <- df %>% mutate(heat =
   case_when(
@@ -64,6 +62,17 @@ winter_detections <- ev %>% filter(heat==1)
 winter_richness <- winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
 winter_biodiversity <- winter_richness / (winter_richness %>% count())
 
+# calculate biodiversity of just wet v dry sensors / sites
+wet_detections <- ev %>% filter(isWet == T)
+wet_richness <- wet_detections %>% select(SpeciesCode) %>% unique() %>% count()
+wet_biodiveresity <- wet_richness / (wet_richness %>% count())
+
+dry_detections <- ev %>% filter(isWet == F)
+dry_richness <- dry_detections %>% select(SpeciesCode) %>% unique() %>% count()
+dry_biodiveresity <- dry_richness / (dry_richness %>% count())
+
+# wet vs dry spring
+
 results <- bind_rows(
   bind_cols(dry_winter_biodiversity, F),
   bind_cols(dry_summer_biodiversity, F),
@@ -82,6 +91,7 @@ dry_n2 <- dry_winter_detections %>% count()
 
 # Z = (p1-p2)/sqrt(p0*(1-p0)*(1/n1+1/n2))
 dry_Z <- (dry_x1 - dry_x2) / sqrt( dry_p0 * ( 1 - dry_p0 ) * ((1 / dry_n1) + (1 / dry_n2)) )
+print(dry_Z)
 # 10.70703
 
 wet_p0 <- (wet_summer_biodiversity + wet_winter_biodiversity) / ((wet_summer_detections %>% count()) + (wet_winter_detections %>% count()))
@@ -91,12 +101,11 @@ wet_n1 <- wet_summer_detections %>% count()
 wet_n2 <- wet_winter_detections %>% count()
 
 wet_Z <- (wet_x1 - wet_x2) / sqrt( wet_p0 * (1 - wet_p0) * ((1 / wet_n1) + (1 / wet_n2)))
-
+print(wet_Z)
 # 0.1150728 !> 1.96
-<<<<<<< HEAD
 
 
-# compare both sites z score calcs
+# calculate z score of summer v winter
 # expected value if there is no difference
 both_p0 <- (summer_biodiversity + winter_biodiversity) / ((summer_detections %>% count()) + (winter_detections %>% count()))
 # observed values
@@ -106,8 +115,28 @@ both_x2 <- winter_biodiversity
 both_n1 <- summer_detections %>% count()
 both_n2 <- winter_detections %>% count()
 both_Z <- (both_x1 - both_x2) / sqrt( both_p0 * (1 - both_p0) * ((1 / both_n1) + (1 / both_n2)))
-
 # z score
 print(both_Z)
-=======
->>>>>>> 8a84eb8a14d306911ff2dc735168ca5b301634ec
+
+# calculate z score of wet v dry
+# expected value if there is no difference
+WD_p0 <- (wet_biodiveresity + dry_biodiveresity) / ((wet_detections %>% count()) + (dry_detections %>% count()))
+# observed values
+WD_x1 <- wet_biodiveresity
+WD_x2 <- dry_biodiveresity
+# observed values / # of observations (means)
+WD_n1 <- wet_detections %>% count()
+WD_n2 <- dry_detections %>% count()
+WD_Z <- (WD_x1 - WD_x2) / sqrt( WD_p0 * (1 - WD_p0) * ((1 / WD_n1) + (1 / WD_n2)))
+# z score
+print(WD_Z)
+
+# calculate z score of wet summer vs dry summer (difference in sites, season constant)
+summer_p0 <- (wet_summer_biodiversity + dry_summer_biodiversity) / ((wet_summer_detections %>% count()) + (dry_summer_detections %>% count()))
+summer_x1 <- wet_summer_biodiversity
+summer_x2 <- dry_summer_biodiversity
+summer_n1 <- wet_summer_detections %>% count()
+summer_n2 <- dry_summer_detections %>% count()
+
+summer_Z <- (summer_x1 - summer_x2) / sqrt( summer_p0 * (1 - summer_p0) * ((1 / summer_n1) + (1 / summer_n2)))
+print(summer_Z)
