@@ -72,4 +72,4 @@ dry <- c(63, 67)
 
 df <- tibble(wet,dry)
 
-t.test(df) %>% pander()
+chisq.test(df) %>% pander()

@@ -13,7 +13,7 @@ csv_in <- csv_in %>% filter(!SpeciesCode %in% excluded_results)
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence >= 0.6) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.0) %>% subset(select = -season)
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
@@ -65,18 +65,30 @@ results <- bind_rows(
   bind_cols(wet_summer_biodiversity, T)
 ) %>% tibble()
 
-# rejection region |Z| > 1.96
+# make a big table for all results
+results <- c(dry_summer_biodiversity * 100, wet_summer_biodiversity, dry_winter_biodiversity * 100, wet_winter_biodiversity * 100)
+isWet <- c("dry", "wet", "dry", "wet")
+season <- c("summer", "summer", "winter", "winter")
 
-biodiversity <- c(dry_summer_biodiversity, dry_winter_biodiversity, wet_summer_biodiversity, wet_winter_biodiversity)
-wet_dry <- c("dry", "dry", "wet", "wet")
-season <- c("summer", "winter", "summer", "winter")
+allResults <- tibble(results, isWet, season)
 
-dry <- c(dry_summer_biodiversity, dry_winter_biodiversity)
-wet <- c(wet_summer_biodiversity, wet_winter_biodiversity)
+aov(results ~ isWet + season, data = allResults) %>% pander()
 
-df <- tibble(wet_dry, season, biodiversity)
+lm.2lines <- lm(results ~ isWet:season, data = allResults)
 
-# using an anova table to measure the variability within variables
-aov(biodiversity ~ wet_dry + season, data = df) %>% pander()
+# isolating each point and calculating the biodiversity
+season <- c("summer", "winter")
+dry <- c(dry_summer_biodiversity * 100, dry_winter_biodiversity * 100)
+dry_df <- tibble(dry, season)
 
-glm(biodiversity ~ wet_dry + season, data = df) %>% pander()
+wet <- c(wet_summer_biodiversity * 100, wet_winter_biodiversity * 100)
+wet_df <- tibble(wet, season)
+
+dry_lm <- lm(dry ~ season, data = dry_df)
+wet_lm <- lm(wet ~ season, data = wet_df)
+
+anova(dry_lm)
+
+result_final <- tibble(wet, dry)
+
+chisq.test(result_final, correct = TRUE)
