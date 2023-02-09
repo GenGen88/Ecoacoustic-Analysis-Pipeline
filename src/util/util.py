@@ -88,3 +88,6 @@ def openFile(path: str) -> bool:
 
 def fileExists(path: str) -> bool:
     return os.path.isfile(path)
+
+def runCommand(command: str):
+    return os.system(command)
