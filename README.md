@@ -19,6 +19,7 @@
 - NodeJS
 - NPM
 - Git
+- ffmpeg
 - GNU/Linux Environment (tested on Ubuntu & OpenSuse)
 - [EMU](https://github.com/QutEcoacoustics/emu)
 
