@@ -33,21 +33,26 @@ ev <- df %>% mutate(heat =
 )
 
 # calculate the biodiversity of wet vs dry
-dry_winter_detections <- ev %>% filter(heat == 1 & isWet == F)
-dry_winter_richness <- dry_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_winter_biodiversity <- as.numeric(dry_winter_richness / (dry_winter_detections %>% count()))
+dry_winter_detections <- ev %>% filter(heat == 1 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_winter_detections) = c("SpeciesCode", "Richness")
+dry_winter_precursor <- dry_winter_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_winter_biodiversity <- 1-(sum(dry_winter_precursor$Numerator)/(sum(dry_winter_precursor$Richness)*(sum(dry_winter_precursor$Richness)-1)))
 
-dry_summer_detections <- ev %>% filter(heat == 3 & isWet == F)
-dry_summer_richess <- dry_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_summer_biodiversity <- as.numeric(dry_summer_richess / (dry_summer_detections %>% count()))
+dry_summer_detections <- ev %>% filter(heat == 3 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_summer_detections) = c("SpeciesCode", "Richness")
+dry_summer_precursor <- dry_summer_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_summer_biodiversity <- 1-(sum(dry_summer_precursor$Numerator)/(sum(dry_summer_precursor$Richness)*(sum(dry_summer_precursor$Richness)-1)))
 
-wet_winter_detections <- ev %>% filter(heat == 1 & isWet == T)
-wet_winter_richness <- wet_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_winter_biodiversity <- as.numeric(wet_winter_richness / (wet_winter_detections %>% count()))
 
-wet_summer_detections <- ev %>% filter(heat == 3 & isWet == T)
-wet_summer_richness <- wet_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_summer_biodiversity <- as.numeric(wet_summer_richness / (wet_summer_detections %>% count()))
+wet_winter_detections <- ev %>% filter(heat == 1 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_winter_detections) = c("SpeciesCode", "Richness")
+wet_winter_precursor <- wet_winter_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_winter_biodiversity <- 1- (sum(wet_winter_precursor$Numerator)/(sum(wet_winter_precursor$Richness)*(sum(wet_winter_precursor$Richness)-1)))
+
+wet_summer_detections <- ev %>% filter(heat == 3 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_summer_detections) = c("SpeciesCode", "Richness")
+wet_summer_precursor <- wet_summer_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_summer_biodiversity <- 1- (sum(wet_summer_precursor$Numerator)/(sum(wet_summer_precursor$Richness)*(sum(wet_summer_precursor$Richness)-1)))
 
 # just seasons biodiversity (both wet + dry)
 summer_detections <- ev %>%filter(heat == 3)

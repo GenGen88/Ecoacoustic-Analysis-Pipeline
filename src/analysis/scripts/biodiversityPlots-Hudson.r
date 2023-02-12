@@ -97,9 +97,21 @@ colnames(dataWet)[3] <- "IsWet";
 
 data <- full_join(dataDry, dataWet)
 
-data %>% ggplot(aes(x = Season, y = Biodiversity, color = IsWet)) +
+# most important plot
+data %>% ggplot(aes(x=factor(Season, level=c('Summer', 'Autumn', 'Winter', 'Spring')),y = Biodiversity, color = IsWet)) +
   geom_point(size = 4) +
   ggtitle("Ecoacoustic Biodiversity Over Seasons")+
+  xlab("Season")+
+  ylim(0,1)+
+  guides(color=guide_legend(title="Location"))+
+  scale_color_hue(labels = c("Dry", "Wet"))
+
+# just summer + winter plot
+s_w_graph <- data %>% filter(Season=="Summer" | Season =="Winter")
+s_w_graph %>% ggplot(aes(x=factor(Season, level=c('Summer', 'Winter')),y = Biodiversity, color = IsWet)) +
+  geom_point(size = 4) +
+  ggtitle("Ecoacoustic Biodiversity Over Seasons")+
+  xlab("Season")+
   ylim(0,1)+
   guides(color=guide_legend(title="Location"))+
   scale_color_hue(labels = c("Dry", "Wet"))
