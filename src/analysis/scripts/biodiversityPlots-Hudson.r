@@ -28,38 +28,51 @@ ev <- df %>% mutate(heat =
 )
 
 # calculate the biodiversity of wet vs dry
-dry_summer_detections <- ev %>% filter(heat == 1 & isWet == F)
-dry_summer_richess <- dry_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_summer_biodiversity <- dry_summer_richess / (dry_summer_detections %>% count())
+dry_summer_detections <- ev %>% filter(heat == 1 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_summer_detections) = c("SpeciesCode", "Richness")
+dry_summer_precursor <- dry_summer_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_summer_biodiversity <- 1-(sum(dry_summer_precursor$Numerator)/(sum(dry_summer_precursor$Richness)*(sum(dry_summer_precursor$Richness)-1)))
 
-dry_autumn_detections <- ev %>% filter(heat == 2 & isWet == F)
-dry_autumn_richness <- dry_autumn_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_autumn_biodiversity <- dry_autumn_richness / (dry_autumn_detections %>% count())
+# no dry autmn data anyways
+dry_autumn_detections <- ev %>% filter(heat == 2 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_autumn_detections) = c("SpeciesCode", "Richness")
+dry_autumn_precursor <- dry_autumn_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_autumn_biodiversity <- 1-(sum(dry_autumn_precursor$Numerator)/(sum(dry_autumn_precursor$Richness)*(sum(dry_autumn_precursor$Richness)-1)))
 
-dry_winter_detections <- ev %>% filter(heat == 3 & isWet == F)
-dry_winter_richness <- dry_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_winter_biodiversity <- dry_winter_richness / (dry_winter_detections %>% count())
+dry_winter_detections <- ev %>% filter(heat == 3 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_winter_detections) = c("SpeciesCode", "Richness")
+dry_winter_precursor <- dry_winter_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_winter_biodiversity <- 1-(sum(dry_winter_precursor$Numerator)/(sum(dry_winter_precursor$Richness)*(sum(dry_winter_precursor$Richness)-1)))
 
-dry_spring_detections <- ev %>% filter(heat == 4 & isWet == F)
-dry_spring_richness <- dry_spring_detections %>% select(SpeciesCode) %>% unique() %>% count()
-dry_spring_biodiversity <- dry_spring_richness / (dry_spring_detections %>% count())
+dry_spring_detections <- ev %>% filter(heat == 4 & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(dry_spring_detections) = c("SpeciesCode", "Richness")
+dry_spring_precursor <- dry_spring_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+dry_spring_biodiversity <- 1- (sum(dry_spring_precursor$Numerator)/(sum(dry_spring_precursor$Richness)*(sum(dry_spring_precursor$Richness)-1)))
 
 # wet locations
-wet_summer_detections <- ev %>% filter(heat == 1 & isWet == T)
-wet_summer_richness <- wet_summer_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_summer_biodiversity <- wet_summer_richness / (wet_summer_detections %>% count())
+wet_summer_detections <- ev %>% filter(heat == 1 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_summer_detections) = c("SpeciesCode", "Richness")
+wet_summer_precursor <- wet_summer_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_summer_biodiversity <- 1- (sum(wet_summer_precursor$Numerator)/(sum(wet_summer_precursor$Richness)*(sum(wet_summer_precursor$Richness)-1)))
 
-wet_autumn_detections <- ev %>% filter(heat == 2 & isWet == T)
-wet_autumn_richness <- wet_autumn_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_autumn_biodiversity <- wet_autumn_richness / (wet_autumn_detections %>% count())
+wet_autumn_detections <- ev %>% filter(heat == 2 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_autumn_detections) = c("SpeciesCode", "Richness")
+wet_autumn_precursor <- wet_autumn_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_autumn_biodiversity <- 1- (sum(wet_autumn_precursor$Numerator)/(sum(wet_autumn_precursor$Richness)*(sum(wet_autumn_precursor$Richness)-1)))
 
-wet_winter_detections <- ev %>% filter(heat == 3 & isWet == T)
-wet_winter_richness <- wet_winter_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_winter_biodiversity <- wet_winter_richness / (wet_winter_detections %>% count())
+wet_winter_detections <- ev %>% filter(heat == 3 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_winter_detections) = c("SpeciesCode", "Richness")
+wet_winter_precursor <- wet_winter_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_winter_biodiversity <- 1- (sum(wet_winter_precursor$Numerator)/(sum(wet_winter_precursor$Richness)*(sum(wet_winter_precursor$Richness)-1)))
 
-wet_spring_detections <- ev %>% filter(heat == 4 & isWet == T)
-wet_spring_richness <- wet_spring_detections %>% select(SpeciesCode) %>% unique() %>% count()
-wet_spring_biodiversity <- wet_spring_richness / (wet_spring_detections %>% count())
+# no wet spring data anyways  
+wet_spring_detections <- ev %>% filter(heat == 4 & isWet == T) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(wet_spring_detections) = c("SpeciesCode", "Richness")
+wet_spring_precursor <- wet_spring_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+wet_spring_biodiversity <- 1- (sum(wet_spring_precursor$Numerator)/(sum(wet_spring_precursor$Richness)*(sum(wet_spring_precursor$Richness)-1)))
+
+# just summer winter
+dataWD <- data %>% filter(Season == "Summer" | Season == "Winter")
 
 # results holds the biodiversity of every season
 dataDry <- bind_rows(
@@ -87,6 +100,7 @@ data <- full_join(dataDry, dataWet)
 data %>% ggplot(aes(x = Season, y = Biodiversity, color = IsWet)) +
   geom_point(size = 4) +
   ggtitle("Ecoacoustic Biodiversity Over Seasons")+
+  ylim(0,1)+
   guides(color=guide_legend(title="Location"))+
   scale_color_hue(labels = c("Dry", "Wet"))
 
@@ -97,3 +111,11 @@ dataWet %>% ggplot(aes(x = Season, y = Biodiversity)) +
 dataDry %>% ggplot(aes(x = Season, y = Biodiversity)) +
   geom_point(size = 4) +
   ggtitle("Ecoacoustic Biodiversity of Dry Sensor Over Seasons")
+
+dataWD <- dataWD %>% group_by(IsWet)
+dataWD %>% ggplot(aes(x = Season, y = Biodiversity, color = IsWet)) +
+  geom_point(size = 4) +
+  ggtitle("Ecoacoustic Biodiversity Over Seasons")+
+  guides(color=guide_legend(title="Location"))+
+  scale_color_hue(labels = c("Dry", "Wet"))+
+  geom_line(aes(x = Season, y = biodiversity))

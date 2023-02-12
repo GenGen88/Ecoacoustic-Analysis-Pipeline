@@ -3,7 +3,10 @@ library(tidyverse)
 library(GGally)
 library(dplyr)
 
-csv_in <- read_csv("./analysis_results.csv")
+#csv_in <- read_csv("./analysis_results.csv")
+
+# current csv
+csv_in <- read_csv("./report.csv") %>% tibble()
 
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
@@ -19,8 +22,11 @@ evf <- evf %>% mutate(month =
 ev <- evf %>% select("SpeciesCode", "isWet", "month")
 
 # dry sensors
-DjanObservations <- ev %>% filter(month == "01" & isWet == F)
-DjanBiodiversity <- (DjanObservations %>% unique() %>% count()) / (DjanObservations %>% count())
+# Observations = Richness
+DjanObservations <- ev %>% filter(month == "01" & isWet == F) %>% group_by(SpeciesCode) %>% count(SpeciesCode)
+colnames(DjanObservations) = c("SpeciesCode", "Richness")
+DjanPrecursor <- DjanObservations %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
+DjanBiodiversity <- 1-(sum(DjanPrecursor$Numerator)/(sum(DjanPrecursor$Richness)*(sum(DjanPrecursor$Richness)-1)))
 
 DfebObservations <- ev %>% filter(month == "02" & isWet == F)
 DfebBiodiversity <- (DfebObservations %>% unique() %>% count()) / (DfebObservations %>% count())
