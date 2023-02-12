@@ -13,7 +13,7 @@ csv_in <- csv_in %>% filter(!SpeciesCode %in% excluded_results)
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
 # season data is also incorrect, so extract this
-df <- csv_in %>% filter(Confidence >= 0.0) %>% subset(select = -season)
+df <- csv_in %>% filter(Confidence >= 0.6) %>% subset(select = -season)
 
 # add seasonal information to tibble
 df <- df %>% mutate(month = 
@@ -87,8 +87,6 @@ wet_df <- tibble(wet, season)
 dry_lm <- lm(dry ~ season, data = dry_df)
 wet_lm <- lm(wet ~ season, data = wet_df)
 
-anova(dry_lm)
-
 result_final <- tibble(wet, dry)
 
-chisq.test(result_final, correct = TRUE)
+chisq.test(result_final, correct = FALSE)

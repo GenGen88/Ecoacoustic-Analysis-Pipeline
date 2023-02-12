@@ -4,6 +4,7 @@ ERROR_404_MESSAGE = "Error 404, audio file not found..."
 ERROR_INVALID_DATE_ERROR_MESSAGE = "invalid date found..."
 
 # working directory constants
+DIR_SOURCE = "./src/"
 DIR_OUT_DIRECTORY = "./out/"
 DIR_IN_DIRECTORY = "./data/"
 
@@ -14,6 +15,8 @@ DIR_WEATHER_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}weather.csv"
 DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 # there are some post processing checks done before the final
 DIR_TOTAL_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}final_report.csv"
+
+EMU_SCRIPT_PATH = f"{DIR_SOURCE}/emu/runEmu.sh"
 
 # CLA argument positions
 CLA_FILE_IN_POSITION = 1

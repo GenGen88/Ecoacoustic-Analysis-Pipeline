@@ -1,10 +1,10 @@
 from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
-from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile
+from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile, runCommand
 from util.initDirectory import validateDirectoryStructure
 
 from analysis.runAnalysisScripts import runAnalysis
 
-from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION
+from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION, EMU_SCRIPT_PATH
 
 import sys
 
@@ -27,6 +27,9 @@ if __name__ == "__main__":
         if sys.argv[CLA_PIPELINE_MODE_CLA_POSITION] == "--pipeline":
             print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
             pipelineMode = True
+
+    # run emu on all the audio files to ensure that all known bugs are fixed
+    runCommand(f"{EMU_SCRIPT_PATH} {EMU_SCRIPT_PATH}")
 
     # to ensure that this program still works without pipeline mode
     # it needs to run and quit once the pipeline has completed once by default
@@ -51,10 +54,10 @@ if __name__ == "__main__":
 
         for file in allFiles:
             createEnvironmentVariablesCSV(file)
-            
+
             if pipelineMode:
                 deleteFile(file)
-        
+
         isFirstRun = False
 
     # the second part of this program is to analyze the relationship between environment variables

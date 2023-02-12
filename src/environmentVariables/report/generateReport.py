@@ -1,4 +1,4 @@
-from util.util import writeToFile, pathExists, sanitizeString, fileExists
+from util.util import writeToFile, pathExists, sanitizeString, runCommand
 from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS, DIR_TOTAL_REPORT_OUT_FILE_PATH
 
 import os
@@ -21,7 +21,7 @@ def generateReport(
         # TODO: I need to add a --verbose flag to enable this
         # print(rowContent)
         writeToFile(DIR_REPORT_OUT_FILE_PATH, rowContent)
-    
+
     # TODO: this should technically not be in here, but this is good enough for now
     # open the results text file in the users specified text editor
     # openFile(DIR_REPORT_OUT_FILE_PATH)
@@ -32,4 +32,4 @@ def generateReportHeaders() -> None:
 
 # sometimes there are double up reports, therefore, remove it
 def cleanUpReport() -> None:
-    os.system(f"./cleanUpReport.sh {DIR_REPORT_OUT_FILE_PATH} {DIR_TOTAL_REPORT_OUT_FILE_PATH}")
+    runCommand(f"./cleanUpReport.sh {DIR_REPORT_OUT_FILE_PATH} {DIR_TOTAL_REPORT_OUT_FILE_PATH}")
