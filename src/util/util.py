@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from util.constants import CONSOLE_INIT_MESSAGE, VALID_AUDIO_FILE_EXTENSIONS
 
@@ -32,6 +33,14 @@ def readFile(path: str) -> str:
 def deleteFile(path: str) -> bool:
     try:
         os.remove(path)
+        return True
+    except any as error:
+        throwError(error, fatal = False)
+        return False
+
+def deletePath(path: str) -> bool:
+    try:
+        shutil.rmtree(path)
         return True
     except any as error:
         throwError(error, fatal = False)

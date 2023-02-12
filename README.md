@@ -28,7 +28,21 @@ Run the install script `./setup.sh`
 
 ### Fetch Data Columns
 
-`./run.sh [file_path] [path]`
+`./run.sh [file_path] [path] <flags>`
+
+**Optional Flags:**
+
+- `--verbose` Print out extra information to the console
+- `--noemu` Do not run emu to fix audio files before processing
+- `--force` Keeps running through errors
+- `--pipeline` Runs in a pipeline mode (downloads and processes data at the same time in a FIFO pipeline)
+
+---
+
+**Potential Future Flags:**
+
+- `--keepmetadata` Retains metadata throughout entire process
+- `--keeporiginal` Does not delete files in the pipeline
 
 ### Visualize Data
 
