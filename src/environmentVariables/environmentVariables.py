@@ -6,8 +6,9 @@ from environmentVariables.weatherData.weatherData import getWeatherDataResult
 from environmentVariables.wetDry import isWetAudioRecording
 
 from util.constants import DIR_BIRDNET_OUT_FILE_PATH
+from util.util import throwError
 
-def createEnvironmentVariablesCSV(filePath) -> None:
+def createEnvironmentVariablesCSV(filePath, errorAll = False, runAuto = True) -> None:
     print(f"Analyzing {filePath}")
 
     runBirdNet(filePath)
@@ -15,7 +16,7 @@ def createEnvironmentVariablesCSV(filePath) -> None:
     birdNetData = readBirdnetResults(DIR_BIRDNET_OUT_FILE_PATH)
 
     if (birdNetData == None):
-        print("could not find birdnet output. Your audio file may be corrupted\n")
+        throwError("Could not find birdnet output. Your audio file may be corrupted\n", fatal=errorAll)
         return 1
 
     birdNetDataLength = len(birdNetData)
@@ -28,4 +29,4 @@ def createEnvironmentVariablesCSV(filePath) -> None:
 
     isWetAudio = isWetAudioRecording(filePath)
 
-    generateReport(birdNetData, audioDateData, seasonData, isWetAudio)
+    generateReport(birdNetData, audioDateData, seasonData, isWetAudio, runAuto=runAuto)

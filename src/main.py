@@ -3,8 +3,6 @@ from emu.emu import runEmu, stripMetadata
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile, runCommand
 from util.initDirectory import validateDirectoryStructure
 
-from analysis.runAnalysisScripts import runAnalysis
-
 from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, EMU_SCRIPT_PATH
 
 from time import sleep
@@ -28,6 +26,11 @@ if __name__ == "__main__":
     # until the user terminates the program with Ctrl + C
     pipelineMode = False
     isVerbose = False
+    isDestructive = False
+    retainMetadata = False
+    retainOriginal = False
+    errorAll = False
+    runAuto = True
 
     for arg in cliArguments:
         if arg == "--pipeline":
@@ -36,6 +39,21 @@ if __name__ == "__main__":
 
         if arg == "--verbose":
             isVerbose = True
+
+        if arg == "--destructive":
+            isDestructive = True
+
+        if arg == "--retainmetadata":
+            retainMetadata = True
+
+        if arg == "--retainoriginal":
+            retainOriginal = True
+
+        if arg == "--eall":
+            errorAll = True
+
+        if arg == "--skipauto":
+            runAuto = False
 
     while (True):
         # check that the audio file or directory exists
@@ -57,14 +75,18 @@ if __name__ == "__main__":
                 if "--noemu" not in cliArguments:
                     runEmu(fileToAnalyze)
 
-                newInFile = stripMetadata(fileToAnalyze)
-                createEnvironmentVariablesCSV(newInFile)
+                newInFile = fileToAnalyze
 
-                # I'm not sure if these sleep statements are needed
-                # if not, they will be removed in a future iteration
-                sleep(0.5)
-                deleteFile(fileToAnalyze)
-                sleep(0.5)
+                if not retainMetadata:
+                    newInFile = stripMetadata(fileToAnalyze)
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
+
+                if not retainOriginal:
+                    # I'm not sure if these sleep statements are needed
+                    # if not, they will be removed in a future iteration
+                    sleep(0.5)
+                    deleteFile(fileToAnalyze)
+                    sleep(0.5)
         else:
             # run emu on all the audio files to ensure that all known bugs are fixed
             if "--noemu" not in cliArguments:
@@ -76,8 +98,16 @@ if __name__ == "__main__":
                 if isVerbose:
                     print(f"Files to analyze: {allFiles}")
 
-                newInFile = stripMetadata(file)
-                createEnvironmentVariablesCSV(newInFile)
+                newInFile = file
+
+                if not retainMetadata:
+                    newInFile = stripMetadata(file)
+
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
+
+                if isDestructive:
+                    sleep(0.5)
+                    deleteFile(file)
 
             # since this is a CLI application, close it in a standard way
             # this is not needed, but I find it to be best practice

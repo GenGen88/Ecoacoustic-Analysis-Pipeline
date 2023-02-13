@@ -171,3 +171,4 @@ in/
 tmp/
 
 .Rhistory
+.RData

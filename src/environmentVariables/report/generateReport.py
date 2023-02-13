@@ -1,3 +1,4 @@
+from analysis.runAnalysisScripts import runAutoAnalyses
 from util.util import writeToFile, pathExists, sanitizeString, runCommand
 from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS, DIR_TOTAL_REPORT_OUT_FILE_PATH
 
@@ -8,7 +9,8 @@ def generateReport(
     dateRows = [],
     seasonsRows = [],
     isWetAudio = False,
-    weatherRows = []
+    weatherRows = [],
+    runAuto = True,
 ) -> None:
     if not pathExists(DIR_REPORT_OUT_FILE_PATH):
         generateReportHeaders()
@@ -26,6 +28,10 @@ def generateReport(
     # open the results text file in the users specified text editor
     # openFile(DIR_REPORT_OUT_FILE_PATH)
     # cleanUpReport()
+
+    # automatically run auto analysis scripts on the new report
+    if runAuto:
+        runAutoAnalyses()
 
 def generateReportHeaders() -> None:
     writeToFile(DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS)
