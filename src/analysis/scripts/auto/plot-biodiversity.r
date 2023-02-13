@@ -1,11 +1,11 @@
-# THIS SCRIPT IS NOW DEPRECATED. PLEASE USE ./auto/plot-biodiversity.r
-# the auto directory specifies scripts that will be automatically run by the analysis program
-
 library(tidyverse)
 library(GGally)
 library(dplyr)
 
-csv_in <- read_csv("./report.csv") %>% tibble()
+# change the output location of the graph
+pdf(file="./out/biodiversity.pdf")
+
+csv_in <- read_csv("./out/report.csv") %>% tibble()
 colnames(csv_in) = c("Selection", "View", "Channel", "BeginTime", "EndTime", "LowFreq", "HighFreq", "SpeciesCode", "CommonName", "Confidence", "date", "season", "isWet")
 
 # since BirdNet logs results with accuracy < 0.5, we need to discard these results
@@ -74,9 +74,6 @@ colnames(wet_spring_detections) = c("SpeciesCode", "Richness")
 wet_spring_precursor <- wet_spring_detections %>% select(SpeciesCode, Richness) %>% mutate(Numerator = (Richness * (Richness - 1)))
 wet_spring_biodiversity <- 1- (sum(wet_spring_precursor$Numerator)/(sum(wet_spring_precursor$Richness)*(sum(wet_spring_precursor$Richness)-1)))
 
-# just summer winter
-dataWD <- data %>% filter(Season == "Summer" | Season == "Winter")
-
 # results holds the biodiversity of every season
 dataDry <- bind_rows(
   bind_cols("Summer", dry_summer_biodiversity, F),
@@ -108,30 +105,3 @@ data %>% ggplot(aes(x=factor(Season, level=c('Summer', 'Autumn', 'Winter', 'Spri
   ylim(0,1)+
   guides(color=guide_legend(title="Location"))+
   scale_color_hue(labels = c("Dry", "Wet"))
-
-# just summer + winter plot
-s_w_graph <- data %>% filter(Season=="Summer" | Season =="Winter")
-s_w_graph %>% ggplot(aes(x=factor(Season, level=c('Summer', 'Winter')),y = Biodiversity, color = IsWet)) +
-  geom_point(size = 4) +
-  ggtitle("Ecoacoustic Biodiversity Over Seasons")+
-  xlab("Season")+
-  ylim(0,1)+
-  guides(color=guide_legend(title="Location"))+
-  scale_color_hue(labels = c("Dry", "Wet"))
-
-dataWet %>% ggplot(aes(x = Season, y = Biodiversity)) +
-  geom_point(size = 4) +
-  ggtitle("Ecoacoustic Biodiversity of Wet Sensor Over Seasons")
-
-dataDry %>% ggplot(aes(x = Season, y = Biodiversity)) +
-  geom_point(size = 4) +
-  ggtitle("Ecoacoustic Biodiversity of Dry Sensor Over Seasons")
-
-dataWD <- dataWD %>% group_by(IsWet)
-dataWD %>% ggplot(aes(x = Season, y = Biodiversity, color = IsWet)) +
-  geom_point(size = 4) +
-  ggtitle("Ecoacoustic Biodiversity Over Seasons")+
-  guides(color=guide_legend(title="Location"))+
-  scale_color_hue(labels = c("Dry", "Wet"))+
-  geom_line(aes(x = Season, y = biodiversity))
-

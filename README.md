@@ -19,6 +19,7 @@
 - NodeJS
 - NPM
 - Git
+- ffmpeg
 - GNU/Linux Environment (tested on Ubuntu & OpenSuse)
 - [EMU](https://github.com/QutEcoacoustics/emu)
 
@@ -26,10 +27,24 @@
 
 Run the install script `./setup.sh`
 
-### Fetch Data Columns
+### Commands
 
-`./run.sh [file_path] [path]`
+#### Run Anayses
 
-### Visualize Data
+`$ ./run.sh [file_path] [path] <flags>`
 
-Visualizing uses an Angular website that handles rendering the data, and fetching new data when it becomes available.
+**Optional Flags:**
+
+- `--verbose` Print out extra information to the console
+- `--noemu` Do not run emu to fix audio files before processing
+- `--force` Keeps running through errors. This can be used to run an analysis without any files
+- `--pipeline` Runs in a pipeline mode (downloads and processes data at the same time in a FIFO pipeline)
+- `--destructive` Deletes files after they are processed
+- `--retainmetadata` Retains metadata throughout entire process
+- `--retainoriginal` Does not delete files in the pipeline
+- `--eall` Errors and quits application if a corrupted audio file is encountered
+- `--skipauto` By default, the analysis pipeline runs all analysis scripts located in `./src/analysis/scripts/auto/`. Use the `--skipauto` flag to skip running these analyses scripts
+
+#### Start Analysis Server
+
+`$ ./start-server.sh`

@@ -67,10 +67,10 @@ app.listen(port, () => {
 });
 
 const constructAnalysisResults = () => {
-  
+
   const analysisResults = getAnalysisResults();
   const analysisResultsRows = analysisResults.split("\n");
-  
+
   const parsedCSV = [];
   analysisResultsRows.forEach((row) => {
     parsedCSV.push(row.split(","));
@@ -88,6 +88,11 @@ const constructAnalysisResults = () => {
 
     rowIndex += 1;
     htmlContent += "</tr>"
+
+    // since there may be millions of lines, only render the first 30
+    if (rowIndex >= 30) {
+      return;
+    }
   });
 
   // close the csv table

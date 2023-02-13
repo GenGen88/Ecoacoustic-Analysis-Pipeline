@@ -1,68 +1,118 @@
 from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
+from emu.emu import runEmu, stripMetadata
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile, runCommand
 from util.initDirectory import validateDirectoryStructure
 
-from analysis.runAnalysisScripts import runAnalysis
+from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, EMU_SCRIPT_PATH
 
-from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, CLA_PIPELINE_MODE_CLA_POSITION, EMU_SCRIPT_PATH
-
+from time import sleep
 import sys
 
 if __name__ == "__main__":
     # ensure that the CLI is standardized
     initConsole()
 
+    cliArguments = sys.argv
+
     # ensure that the working directory is standardized
     validateDirectoryStructure()
 
-    if len(sys.argv) < CLA_FILE_IN_POSITION + 1:
+    if len(cliArguments) < CLA_FILE_IN_POSITION + 1:
         throwError(ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE)
 
-    audioInFilePath = sys.argv[CLA_FILE_IN_POSITION]
+    audioInFilePath = cliArguments[CLA_FILE_IN_POSITION]
 
     # in pipeline mode, when an audio file is processed, it is deleted. It will then continue looking for audio files
     # until the user terminates the program with Ctrl + C
     pipelineMode = False
-    if len(sys.argv) > CLA_PIPELINE_MODE_CLA_POSITION:
-        if sys.argv[CLA_PIPELINE_MODE_CLA_POSITION] == "--pipeline":
+    isVerbose = False
+    isDestructive = False
+    retainMetadata = False
+    retainOriginal = False
+    errorAll = False
+    runAuto = True
+    forceThroughErrors = False
+
+    for arg in cliArguments:
+        if arg == "--pipeline":
             print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
             pipelineMode = True
 
-    # run emu on all the audio files to ensure that all known bugs are fixed
-    runCommand(f"{EMU_SCRIPT_PATH} {EMU_SCRIPT_PATH}")
+        if arg == "--verbose":
+            isVerbose = True
 
-    # to ensure that this program still works without pipeline mode
-    # it needs to run and quit once the pipeline has completed once by default
-    # therefore, we can check if it is the first run. The pipeline should always complete once
-    isFirstRun = True
-    while (pipelineMode or isFirstRun):
+        if arg == "--destructive":
+            isDestructive = True
+
+        if arg == "--retainmetadata":
+            retainMetadata = True
+
+        if arg == "--retainoriginal":
+            retainOriginal = True
+
+        if arg == "--eall":
+            errorAll = True
+
+        if arg == "--skipauto":
+            runAuto = False
+
+        if arg == "--force":
+            forceThroughErrors = True
+
+    while (True):
         # check that the audio file or directory exists
-        if not pathExists(audioInFilePath):
-            throwError(ERROR_404_MESSAGE)
+        if not pathExists(audioInFilePath) or forceThroughErrors:
+            throwError(ERROR_404_MESSAGE, errorCode=404)
 
         allFiles = directoryFiles(audioInFilePath)
 
-        # TODO: this should only print out if the --verbose flag is used
-        print(f"Files to analyze: {allFiles}")
+        if pipelineMode:
+            # before analyzing files, they need to be fully downloaded
+            # so assert that the previous audio recording was successfully downloaded by asserting that
+            # there is a new download that has started.
+            # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
+            if len(allFiles) <= 2:
+                continue
+            else:
+                fileToAnalyze = allFiles[0]
 
-        # before analyzing files, they need to be fully downloaded
-        # so assert that the previous audio recording was successfully downloaded by asserting that
-        # there is a new download that has started.
-        # for standard run (not pipeline mode), we can assume that the files are fully downloaded and skip this assertion
-        if len(allFiles) <= 2 and not isFirstRun:
-            continue
+                if "--noemu" not in cliArguments:
+                    runEmu(fileToAnalyze)
 
-        for file in allFiles:
-            createEnvironmentVariablesCSV(file)
+                newInFile = fileToAnalyze
 
-            if pipelineMode:
-                deleteFile(file)
+                if not retainMetadata:
+                    newInFile = stripMetadata(fileToAnalyze)
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
 
-        isFirstRun = False
+                if not retainOriginal:
+                    # I'm not sure if these sleep statements are needed
+                    # if not, they will be removed in a future iteration
+                    sleep(0.5)
+                    deleteFile(fileToAnalyze)
+                    sleep(0.5)
+        else:
+            # run emu on all the audio files to ensure that all known bugs are fixed
+            if "--noemu" not in cliArguments:
+                runEmu()
 
-    # the second part of this program is to analyze the relationship between environment variables
-    # runAnalysis(DIR_TOTAL_REPORT_OUT_FILE_PATH)
+            for file in allFiles:
+                allFiles = directoryFiles(audioInFilePath)
 
-    # since this is a CLI application, close it in a standard way
-    # this is not needed, but I find it to be best practice
-    closeConsole()
+                if isVerbose:
+                    print(f"Files to analyze: {allFiles}")
+
+                newInFile = file
+
+                if not retainMetadata:
+                    newInFile = stripMetadata(file)
+
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
+
+                if isDestructive:
+                    sleep(0.5)
+                    deleteFile(file)
+
+            # since this is a CLI application, close it in a standard way
+            # this is not needed, but I find it to be best practice
+            closeConsole()
