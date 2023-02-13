@@ -31,6 +31,7 @@ if __name__ == "__main__":
     retainOriginal = False
     errorAll = False
     runAuto = True
+    forceThroughErrors = False
 
     for arg in cliArguments:
         if arg == "--pipeline":
@@ -55,9 +56,12 @@ if __name__ == "__main__":
         if arg == "--skipauto":
             runAuto = False
 
+        if arg == "--force":
+            forceThroughErrors = True
+
     while (True):
         # check that the audio file or directory exists
-        if not pathExists(audioInFilePath):
+        if not pathExists(audioInFilePath) or forceThroughErrors:
             throwError(ERROR_404_MESSAGE, errorCode=404)
 
         allFiles = directoryFiles(audioInFilePath)

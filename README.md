@@ -37,7 +37,7 @@ Run the install script `./setup.sh`
 
 - `--verbose` Print out extra information to the console
 - `--noemu` Do not run emu to fix audio files before processing
-- `--force` Keeps running through errors
+- `--force` Keeps running through errors. This can be used to run an analysis without any files
 - `--pipeline` Runs in a pipeline mode (downloads and processes data at the same time in a FIFO pipeline)
 - `--destructive` Deletes files after they are processed
 - `--retainmetadata` Retains metadata throughout entire process
