@@ -32,6 +32,7 @@ if __name__ == "__main__":
     errorAll = False
     runAuto = True
     forceThroughErrors = False
+    allowDuplicates = False
 
     for arg in cliArguments:
         if arg == "--pipeline":
@@ -59,6 +60,9 @@ if __name__ == "__main__":
         if arg == "--force":
             forceThroughErrors = True
 
+        if arg == "--allowduplicates":
+            allowDuplicates = True
+
     while (True):
         # check that the audio file or directory exists
         if not pathExists(audioInFilePath) or forceThroughErrors:
@@ -83,7 +87,7 @@ if __name__ == "__main__":
 
                 if not retainMetadata:
                     newInFile = stripMetadata(fileToAnalyze)
-                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto, allowDuplicates)
 
                 if not retainOriginal:
                     # I'm not sure if these sleep statements are needed
@@ -107,7 +111,7 @@ if __name__ == "__main__":
                 if not retainMetadata:
                     newInFile = stripMetadata(file)
 
-                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto)
+                createEnvironmentVariablesCSV(newInFile, errorAll, runAuto, allowDuplicates)
 
                 if isDestructive:
                     sleep(0.5)

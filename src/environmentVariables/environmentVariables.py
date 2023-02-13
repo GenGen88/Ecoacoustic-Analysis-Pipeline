@@ -8,7 +8,7 @@ from environmentVariables.wetDry import isWetAudioRecording
 from util.constants import DIR_BIRDNET_OUT_FILE_PATH
 from util.util import throwError
 
-def createEnvironmentVariablesCSV(filePath, errorAll = False, runAuto = True) -> None:
+def createEnvironmentVariablesCSV(filePath, errorAll = False, runAuto = True, allowDuplicates = False) -> None:
     print(f"Analyzing {filePath}")
 
     runBirdNet(filePath)
@@ -29,4 +29,4 @@ def createEnvironmentVariablesCSV(filePath, errorAll = False, runAuto = True) ->
 
     isWetAudio = isWetAudioRecording(filePath)
 
-    generateReport(birdNetData, audioDateData, seasonData, isWetAudio, runAuto=runAuto)
+    generateReport(birdNetData, audioDateData, seasonData, isWetAudio, runAuto=runAuto, allowDuplicates=allowDuplicates)

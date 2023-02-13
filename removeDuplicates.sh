@@ -4,6 +4,8 @@
 # this works because all reports have a time stamp with results. therefore, if the same timestamp and result is seen
 # we can concur that the result line is duplicate
 
-# CLA at position 1 represents the in file, while CLA position 2 represents the out file
+# CLA at position 1 represents the in file and out file
 
-sort -u $1 >> $2;
+#!/bin/bash
+
+sort -u ./report.csv > report_final.csv

@@ -44,6 +44,7 @@ Run the install script `./setup.sh`
 - `--retainoriginal` Does not delete files in the pipeline
 - `--eall` Errors and quits application if a corrupted audio file is encountered
 - `--skipauto` By default, the analysis pipeline runs all analysis scripts located in `./src/analysis/scripts/auto/`. Use the `--skipauto` flag to skip running these analyses scripts
+- `--allowduplicates` Allows for duplicate events in the `results.csv` output
 
 #### Start Analysis Server
 

@@ -1,8 +1,6 @@
 from analysis.runAnalysisScripts import runAutoAnalyses
 from util.util import writeToFile, pathExists, sanitizeString, runCommand
-from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS, DIR_TOTAL_REPORT_OUT_FILE_PATH
-
-import os
+from util.constants import DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS, CLEANUP_SCRIPT_PATH
 
 def generateReport(
     birdNetRows = [],
@@ -11,6 +9,7 @@ def generateReport(
     isWetAudio = False,
     weatherRows = [],
     runAuto = True,
+    allowDuplicates = False,
 ) -> None:
     if not pathExists(DIR_REPORT_OUT_FILE_PATH):
         generateReportHeaders()
@@ -27,7 +26,10 @@ def generateReport(
     # TODO: this should technically not be in here, but this is good enough for now
     # open the results text file in the users specified text editor
     # openFile(DIR_REPORT_OUT_FILE_PATH)
-    # cleanUpReport()
+
+    if not allowDuplicates:
+        pass
+        # cleanUpReport()
 
     # automatically run auto analysis scripts on the new report
     if runAuto:
@@ -38,4 +40,4 @@ def generateReportHeaders() -> None:
 
 # sometimes there are double up reports, therefore, remove it
 def cleanUpReport() -> None:
-    runCommand(f"./cleanUpReport.sh {DIR_REPORT_OUT_FILE_PATH} {DIR_TOTAL_REPORT_OUT_FILE_PATH}")
+    runCommand(f"{CLEANUP_SCRIPT_PATH} {DIR_REPORT_OUT_FILE_PATH}")
