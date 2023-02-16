@@ -27,13 +27,14 @@ def generateReport(
     # open the results text file in the users specified text editor
     # openFile(DIR_REPORT_OUT_FILE_PATH)
 
+    # TODO: this is currently disabled it because I haven't tested it yet
     if not allowDuplicates:
         pass
         # cleanUpReport()
 
     # automatically run auto analysis scripts on the new report
     if runAuto:
-        runAutoAnalyses()
+        runAutoAnalyses(DIR_REPORT_OUT_FILE_PATH)
 
 def generateReportHeaders() -> None:
     writeToFile(DIR_REPORT_OUT_FILE_PATH, COLUMN_HEADERS)

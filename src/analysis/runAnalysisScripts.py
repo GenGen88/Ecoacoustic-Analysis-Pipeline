@@ -1,7 +1,5 @@
-import os
-
-from util.constants import DIR_BIRDNET_OUT_FILE_PATH
+from util.constants import DIR_OUT_DIRECTORY
 from util.util import runCommand
 
-def runAutoAnalyses() -> None:
-    runCommand("./src/analysis/runAutoAnalyses.sh")
+def runAutoAnalyses(analysisResultsPath: str) -> None:
+    runCommand(f"./src/analysis/runAutoAnalyses.sh {DIR_OUT_DIRECTORY} {analysisResultsPath}")
