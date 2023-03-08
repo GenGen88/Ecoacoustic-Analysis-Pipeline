@@ -1,16 +1,6 @@
-# Realtime analysis of bird species, and the interaction with environment variables
+# Ecoacoustics Analysis Pipeline
 
-## Objectives
-
-- Analyze abundance of bird species over seasonal dates
-- Display realtime analyses on a website
-
-## Features
-
-- chart bird species over time
-- relate to seasonal data
-- acoustic indices
-- vegetation?
+A pipeline to download, process, and analyze audio recordings in parallel, and watch results form in real time!
 
 ## Required Tools
 
@@ -27,11 +17,11 @@
 
 Run the install script `./setup.sh`
 
-### Commands
+### Usage
 
-#### Run Anayses
-
-`$ ./run.sh [file_path] [path] <flags>`
+```sh
+./run.sh [file_path] [path] <flags>
+```
 
 **Optional Flags:**
 
