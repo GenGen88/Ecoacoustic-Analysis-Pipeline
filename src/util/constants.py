@@ -27,6 +27,17 @@ VALID_AUDIO_FILE_EXTENSIONS = [".wav", ".mp3", ".flac"]
 # misc
 COLUMN_HEADERS = "Selection,View,Channel,BeginTime,EndTime,LowFreq,HighFreq,SpeciesCode,CommonName,Confidence,date,season,isWet\n"
 
+# CLA arguments
+PIPELINE_CLA_ARGUMENT = "--pipeline"
+VERBOSE_CLA_ARGUMENT = "--verbose"
+DESTRUCTIVE_CLA_ARGUMENT = "--destructive"
+RETAIN_METADATA_CLA_ARGUMENT = "--retainmetadata"
+RETAIN_ORIGINAL_CLA_ARGUMENT = "--retainoriginal"
+ERROR_ALL_CLA_ARGUMENT = "--eall"
+SKIP_AUTO_CLA_ARGUMENT = "--skipauto"
+FORCE_CLA_ARGUMENT = "--force"
+ALLOW_DUPLICATES_CLA_ARGUMENT = "--allowduplicates"
+
 CONSOLE_INIT_MESSAGE = """
 Ecoacoustic-Analysis-Pipeline
 \tBy: Hudson Newey & Genna Dias\n

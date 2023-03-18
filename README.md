@@ -20,7 +20,7 @@ Run the install script `./setup.sh`
 ### Usage
 
 ```sh
-./run.sh [file_path] [path] <flags>
+./run.sh <file_in_path> [flags]
 ```
 
 **Optional Flags:**
@@ -38,4 +38,6 @@ Run the install script `./setup.sh`
 
 #### Start Analysis Server
 
-`$ ./start-server.sh`
+```sh
+./start-server.sh
+```

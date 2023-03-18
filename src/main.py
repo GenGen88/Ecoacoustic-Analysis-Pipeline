@@ -3,7 +3,7 @@ from emu.emu import runEmu, stripMetadata
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile, runCommand
 from util.initDirectory import validateDirectoryStructure
 
-from util.constants import ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, EMU_SCRIPT_PATH
+from util.constants import ALLOW_DUPLICATES_CLA_ARGUMENT, DESTRUCTIVE_CLA_ARGUMENT, ERROR_ALL_CLA_ARGUMENT, ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, EMU_SCRIPT_PATH, FORCE_CLA_ARGUMENT, PIPELINE_CLA_ARGUMENT, RETAIN_METADATA_CLA_ARGUMENT, RETAIN_ORIGINAL_CLA_ARGUMENT, SKIP_AUTO_CLA_ARGUMENT, VERBOSE_CLA_ARGUMENT
 
 from time import sleep
 import sys
@@ -12,56 +12,30 @@ if __name__ == "__main__":
     # ensure that the CLI is standardized
     initConsole()
 
-    cliArguments = sys.argv
+    claArguments = sys.argv
 
     # ensure that the working directory is standardized
     validateDirectoryStructure()
 
-    if len(cliArguments) < CLA_FILE_IN_POSITION + 1:
+    if len(claArguments) < CLA_FILE_IN_POSITION + 1:
         throwError(ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE)
 
-    audioInFilePath = cliArguments[CLA_FILE_IN_POSITION]
+    # cli arguments
+    audioInFilePath = claArguments[CLA_FILE_IN_POSITION]
 
-    # in pipeline mode, when an audio file is processed, it is deleted. It will then continue looking for audio files
-    # until the user terminates the program with Ctrl + C
-    pipelineMode = False
-    isVerbose = False
-    isDestructive = False
-    retainMetadata = False
-    retainOriginal = False
-    errorAll = False
-    runAuto = True
-    forceThroughErrors = False
-    allowDuplicates = False
+    # cli / cla arguments
+    pipelineMode = PIPELINE_CLA_ARGUMENT in claArguments
+    isVerbose = VERBOSE_CLA_ARGUMENT in claArguments
+    isDestructive = DESTRUCTIVE_CLA_ARGUMENT in claArguments
+    retainMetadata = RETAIN_METADATA_CLA_ARGUMENT in claArguments
+    retainOriginal = RETAIN_ORIGINAL_CLA_ARGUMENT in claArguments
+    errorAll = ERROR_ALL_CLA_ARGUMENT in claArguments
+    runAuto = SKIP_AUTO_CLA_ARGUMENT not in claArguments
+    forceThroughErrors = FORCE_CLA_ARGUMENT in claArguments
+    allowDuplicates = ALLOW_DUPLICATES_CLA_ARGUMENT in claArguments
 
-    for arg in cliArguments:
-        if arg == "--pipeline":
-            print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
-            pipelineMode = True
-
-        if arg == "--verbose":
-            isVerbose = True
-
-        if arg == "--destructive":
-            isDestructive = True
-
-        if arg == "--retainmetadata":
-            retainMetadata = True
-
-        if arg == "--retainoriginal":
-            retainOriginal = True
-
-        if arg == "--eall":
-            errorAll = True
-
-        if arg == "--skipauto":
-            runAuto = False
-
-        if arg == "--force":
-            forceThroughErrors = True
-
-        if arg == "--allowduplicates":
-            allowDuplicates = True
+    if pipelineMode:
+        print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
 
     while (True):
         # check that the audio file or directory exists
@@ -80,7 +54,7 @@ if __name__ == "__main__":
             else:
                 fileToAnalyze = allFiles[0]
 
-                if "--noemu" not in cliArguments:
+                if "--noemu" not in claArguments:
                     runEmu(fileToAnalyze)
 
                 newInFile = fileToAnalyze
@@ -97,7 +71,7 @@ if __name__ == "__main__":
                     sleep(0.5)
         else:
             # run emu on all the audio files to ensure that all known bugs are fixed
-            if "--noemu" not in cliArguments:
+            if "--noemu" not in claArguments:
                 runEmu()
 
             for file in allFiles:
