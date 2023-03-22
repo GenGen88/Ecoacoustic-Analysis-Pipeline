@@ -16,7 +16,7 @@ DIR_BIRDNET_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}birdnet-results.csv"
 DIR_WEATHER_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}weather.csv"
 DIR_REPORT_OUT_FILE_PATH = f"{DIR_OUT_DIRECTORY}report.csv"
 
-EMU_SCRIPT_PATH = f"{DIR_SOURCE}/emu/runEmu.sh"
+PRE_PROCESSING_SCRIPT_PATH = f"{DIR_SOURCE}/preProcessing/runPreprocessing.sh"
 CLEANUP_SCRIPT_PATH = f"{DIR_SOURCE}/environmentVariables/report/cleanupReport.sh"
 
 # CLA argument positions
@@ -37,6 +37,7 @@ ERROR_ALL_CLA_ARGUMENT = "--eall"
 SKIP_AUTO_CLA_ARGUMENT = "--skipauto"
 FORCE_CLA_ARGUMENT = "--force"
 ALLOW_DUPLICATES_CLA_ARGUMENT = "--allowduplicates"
+SKIP_PRE_PROCESSING_CLA_ARGUMENT = "--skippreprocessing"
 
 CONSOLE_INIT_MESSAGE = """
 Ecoacoustic-Analysis-Pipeline

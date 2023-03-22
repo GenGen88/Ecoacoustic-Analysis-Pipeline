@@ -1,9 +1,9 @@
 from environmentVariables.environmentVariables import createEnvironmentVariablesCSV
-from emu.emu import runEmu, stripMetadata
+from preProcessing.preProcessing import runAutomatedPreProcessing, stripMetadata
 from util.util import throwError, initConsole, pathExists, directoryFiles, closeConsole, deleteFile, runCommand
 from util.initDirectory import validateDirectoryStructure
 
-from util.constants import ALLOW_DUPLICATES_CLA_ARGUMENT, DESTRUCTIVE_CLA_ARGUMENT, ERROR_ALL_CLA_ARGUMENT, ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, EMU_SCRIPT_PATH, FORCE_CLA_ARGUMENT, PIPELINE_CLA_ARGUMENT, RETAIN_METADATA_CLA_ARGUMENT, RETAIN_ORIGINAL_CLA_ARGUMENT, SKIP_AUTO_CLA_ARGUMENT, VERBOSE_CLA_ARGUMENT
+from util.constants import ALLOW_DUPLICATES_CLA_ARGUMENT, DESTRUCTIVE_CLA_ARGUMENT, ERROR_ALL_CLA_ARGUMENT, ERROR_INVALID_ARGUMENTS_ERROR_MESSAGE, ERROR_404_MESSAGE, CLA_FILE_IN_POSITION, FORCE_CLA_ARGUMENT, PIPELINE_CLA_ARGUMENT, RETAIN_METADATA_CLA_ARGUMENT, RETAIN_ORIGINAL_CLA_ARGUMENT, SKIP_AUTO_CLA_ARGUMENT, VERBOSE_CLA_ARGUMENT, SKIP_PRE_PROCESSING_CLA_ARGUMENT
 
 from time import sleep
 import sys
@@ -33,6 +33,7 @@ if __name__ == "__main__":
     runAuto = SKIP_AUTO_CLA_ARGUMENT not in claArguments
     forceThroughErrors = FORCE_CLA_ARGUMENT in claArguments
     allowDuplicates = ALLOW_DUPLICATES_CLA_ARGUMENT in claArguments
+    skipPreProcessing = SKIP_PRE_PROCESSING_CLA_ARGUMENT in claArguments
 
     if pipelineMode:
         print("\tProgram is running in pipeline mode!\n\tTo terminate the program, please press Ctrl + C\n")
@@ -54,8 +55,8 @@ if __name__ == "__main__":
             else:
                 fileToAnalyze = allFiles[0]
 
-                if "--noemu" not in claArguments:
-                    runEmu(fileToAnalyze)
+                if not skipPreProcessing:
+                    runAutomatedPreProcessing(fileToAnalyze)
 
                 newInFile = fileToAnalyze
 
@@ -70,9 +71,8 @@ if __name__ == "__main__":
                     deleteFile(fileToAnalyze)
                     sleep(0.5)
         else:
-            # run emu on all the audio files to ensure that all known bugs are fixed
-            if "--noemu" not in claArguments:
-                runEmu()
+            if not skipPreProcessing:
+                runAutomatedPreProcessing()
 
             for file in allFiles:
                 allFiles = directoryFiles(audioInFilePath)

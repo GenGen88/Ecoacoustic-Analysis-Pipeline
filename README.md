@@ -26,7 +26,7 @@ Run the install script `./setup.sh`
 **Optional Flags:**
 
 - `--verbose` Print out extra information to the console
-- `--noemu` Do not run emu to fix audio files before processing
+- `--skippreprocessing` Do not run pre-processing before metadata extraction (emu)
 - `--force` Keeps running through errors. This can be used to run an analysis without any files
 - `--pipeline` Runs in a pipeline mode (downloads and processes data at the same time in a FIFO pipeline)
 - `--destructive` Deletes files after they are processed

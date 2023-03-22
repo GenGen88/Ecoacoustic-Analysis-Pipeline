@@ -1,14 +1,11 @@
-from util.constants import DIR_IN_DIRECTORY, EMU_SCRIPT_PATH, DIR_PROCESSING_DIRECTORY
+from util.constants import DIR_IN_DIRECTORY, PRE_PROCESSING_SCRIPT_PATH, DIR_PROCESSING_DIRECTORY
 from util.util import pathExists, runCommand, deletePath, createFolder
 from time import sleep
 
-def runEmu(path: str = DIR_IN_DIRECTORY) -> None:
-    runCommand(f"{EMU_SCRIPT_PATH} {path}")
+def runAutomatedPreProcessing(path: str = DIR_IN_DIRECTORY) -> None:
+    runCommand(f"{PRE_PROCESSING_SCRIPT_PATH} {path}")
 
-# there was a bug in an old version of EMU that didn't calculate hashes correctly
-# for this reason, if the audio files were run through an analyzer without removing metadata hashes
-# the file would be incorrectly reported as corrupted
-# for this reason, the hacky work around is to remove all metadata from the audio recordings
+# TODO: Find out why this step is sometimes necessary
 def stripMetadata(path: str) -> str:
     inFileName = path.split("/").pop()
     processedFile = DIR_PROCESSING_DIRECTORY + inFileName
