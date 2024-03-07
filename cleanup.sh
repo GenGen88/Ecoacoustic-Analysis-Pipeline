@@ -5,3 +5,4 @@ find . -name "venv" | xargs rm -rf;
 rm -rf ./src/lib/;
 rm ./.RData;
 rm ./.Rhistory;
+rm ./out/report.csv;

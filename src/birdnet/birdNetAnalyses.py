@@ -1,4 +1,3 @@
-import os
 from util.constants import DIR_PROCESSING_OUT_FILE_PATH
 from util.util import runCommand
 

@@ -8,7 +8,7 @@ from util.constants import ALLOW_DUPLICATES_CLA_ARGUMENT, DESTRUCTIVE_CLA_ARGUME
 from time import sleep
 import sys
 
-if __name__ == "__main__":
+def main() -> None:
     # ensure that the CLI is standardized
     initConsole()
 
@@ -94,3 +94,6 @@ if __name__ == "__main__":
             # since this is a CLI application, close it in a standard way
             # this is not needed, but I find it to be best practice
             closeConsole()
+
+if __name__ == "__main__":
+    main()
